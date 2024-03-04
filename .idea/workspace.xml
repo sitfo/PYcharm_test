@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9bdd6eb3-81f4-4564-b37d-4de897f88f69" name="Changes" comment="update" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/main.py" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="2FcouhvyqZE9LKwemYovl9trl3V" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.chatbot.executor": "Run",
+    "Python.data-extract.executor": "Run",
+    "Python.model_train_Longform.executor": "Run",
+    "Python.train_model_story.executor": "Run",
+    "Python.training.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "load",
+    "last_opened_file_path": "/Users/liujinlong/PycharmProjects/pythonProject",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/dataset" />
+      <recent name="$PROJECT_DIR$/data" />
+    </key>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-d68999036c7f-b11f5e8da5ad-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-233.14475.56" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9bdd6eb3-81f4-4564-b37d-4de897f88f69" name="Changes" comment="" />
+      <created>1664800958275</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1664800958275</updated>
+      <workItem from="1664800978061" duration="276000" />
+      <workItem from="1664803623072" duration="142000" />
+      <workItem from="1664881941719" duration="449000" />
+      <workItem from="1665065982237" duration="34000" />
+      <workItem from="1665740818452" duration="1610000" />
+      <workItem from="1665742847298" duration="458000" />
+      <workItem from="1666173599095" duration="19000" />
+      <workItem from="1706451160132" duration="42000" />
+      <workItem from="1706451214381" duration="154000" />
+      <workItem from="1706705437323" duration="40000" />
+      <workItem from="1706705481879" duration="14000" />
+      <workItem from="1707308503126" duration="407000" />
+      <workItem from="1707308917674" duration="379000" />
+      <workItem from="1707309604437" duration="586000" />
+      <workItem from="1707310265571" duration="180000" />
+      <workItem from="1707314157087" duration="3211000" />
+      <workItem from="1707317527948" duration="84000" />
+      <workItem from="1707317642166" duration="202000" />
+      <workItem from="1707318297187" duration="463000" />
+      <workItem from="1707330580765" duration="547000" />
+      <workItem from="1707331137366" duration="187000" />
+      <workItem from="1707331333419" duration="419000" />
+      <workItem from="1707331761803" duration="3011000" />
+      <workItem from="1707341537290" duration="3170000" />
+      <workItem from="1707386395775" duration="2759000" />
+      <workItem from="1707389578006" duration="4359000" />
+      <workItem from="1707396756819" duration="8913000" />
+      <workItem from="1707472129742" duration="6815000" />
+      <workItem from="1707492535714" duration="12000" />
+      <workItem from="1707492776250" duration="845000" />
+      <workItem from="1707663876621" duration="128000" />
+      <workItem from="1707775110387" duration="289000" />
+      <workItem from="1708423020128" duration="877000" />
+      <workItem from="1708423904825" duration="1886000" />
+      <workItem from="1708428815608" duration="8292000" />
+      <workItem from="1708437800765" duration="1508000" />
+      <workItem from="1709037706104" duration="7011000" />
+      <workItem from="1709046316955" duration="4106000" />
+      <workItem from="1709110422795" duration="5412000" />
+      <workItem from="1709115845956" duration="10765000" />
+      <workItem from="1709129979964" duration="2056000" />
+      <workItem from="1709135881334" duration="305000" />
+      <workItem from="1709197169113" duration="776000" />
+      <workItem from="1709197955336" duration="450000" />
+      <workItem from="1709198430855" duration="188000" />
+      <workItem from="1709198626390" duration="96000" />
+      <workItem from="1709198727632" duration="7985000" />
+      <workItem from="1709210060500" duration="2707000" />
+      <workItem from="1709214087157" duration="2058000" />
+      <workItem from="1709222491102" duration="2418000" />
+      <workItem from="1709283256074" duration="4118000" />
+      <workItem from="1709287400960" duration="4990000" />
+      <workItem from="1709296449355" duration="2310000" />
+      <workItem from="1709304951327" duration="2945000" />
+      <workItem from="1709542287583" duration="1945000" />
+      <workItem from="1709550441528" duration="422000" />
+    </task>
+    <task id="LOCAL-00001" summary="update">
+      <option name="closed" value="true" />
+      <created>1709550816396</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1709550816396</updated>
+    </task>
+    <task id="LOCAL-00002" summary="update">
+      <option name="closed" value="true" />
+      <created>1709550858351</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709550858351</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update" />
+    <option name="LAST_COMMIT_MESSAGE" value="update" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/pythonProject$prompt.coverage" NAME="prompt Coverage Results" MODIFIED="1709113848646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$evaluate.coverage" NAME="evaluate Coverage Results" MODIFIED="1709115998320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$generate.coverage" NAME="generate Coverage Results" MODIFIED="1709115984038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$model_train.coverage" NAME="model_train Coverage Results" MODIFIED="1709133655947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$training.coverage" NAME="training Coverage Results" MODIFIED="1709307035084" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$chatbot.coverage" NAME="chatbot Coverage Results" MODIFIED="1709291736282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$train_model_story.coverage" NAME="train_model_story Coverage Results" MODIFIED="1709307830617" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$main.coverage" NAME="main Coverage Results" MODIFIED="1709037901014" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$TEST.coverage" NAME="TEST Coverage Results" MODIFIED="1706451344024" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$model_train_Longform.coverage" NAME="model_train_Longform Coverage Results" MODIFIED="1709214855200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pythonProject$data_extract.coverage" NAME="data-extract Coverage Results" MODIFIED="1709306987567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
