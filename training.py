@@ -220,5 +220,5 @@ for iter in range(max_iters):
     optimizer.step()
     scheduler.step()
 
-torch.save(model, '.model/model-01.pkl')
+torch.save(model, './model/model-01.pkl')
 print('model saved')
