@@ -19,7 +19,6 @@ n_head = 4
 n_layer = 4
 dropout = 0.2
 
-
 chars = ""
 with open("../data/vocab.txt", 'r', encoding='utf-8') as f:
     text = f.read()
@@ -221,14 +220,13 @@ def save_best_model():
     torch.save(model, '../models/model-01.pkl')
     print('model saved')
 
+
 model = GPTLanguageModel(vocab_size)
 m = model.to(device)
 
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 scheduler = StepLR(optimizer, step_size=1000, gamma=0.1)
 
+
 def main():
     save_best_model()
-
-
-
