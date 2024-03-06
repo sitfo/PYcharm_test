@@ -215,7 +215,7 @@ def save_best_model():
         optimizer.step()
         scheduler.step()
 
-    torch.save(model, './model-01.pkl')
+    torch.save(model, './model/model-01.pkl')
     print('model saved')
 
 model = GPTLanguageModel(vocab_size)
