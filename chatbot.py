@@ -19,7 +19,7 @@ device = 'cuda' if torch.cuda.is_available() else 'mps'
 
 batch_size = 32
 block_size = 512
-max_iters = 200
+max_iters = 20000
 learning_rate = 3e-4
 eval_iters = 100
 n_embd = 384
@@ -184,17 +184,16 @@ class GPTLanguageModel(nn.Module):
             index = torch.cat((index, index_next), dim=1) # (B, T+1)
         return index
 
-model = GPTLanguageModel(vocab_size)
-print('loading model parameters...')
-with open('./model-01.pkl', 'rb') as f:
-    model = pickle.load(f)
-print('loaded successfully!')
-m = model.to(device)
+def main():
+    model = GPTLanguageModel(vocab_size)
+    print('loading model parameters...')
+    with open('./model-01.pkl', 'rb') as f:
+        model = pickle.load(f)
+    print('loaded successfully!')
+    m = model.to(device)
 
-
-
-while True:
-    prompt = input("Prompt:\n")
-    context = torch.tensor(encode(prompt), dtype=torch.long, device=device)
-    generated_chars = decode(m.generate(context.unsqueeze(0), max_new_tokens=500)[0].tolist())
-    print(f'Completion:\n{generated_chars}')
+    while True:
+        prompt = input("Prompt:\n")
+        context = torch.tensor(encode(prompt), dtype=torch.long, device=device)
+        generated_chars = decode(m.generate(context.unsqueeze(0), max_new_tokens=500)[0].tolist())
+        print(f'Completion:\n{generated_chars}')

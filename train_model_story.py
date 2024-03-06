@@ -219,9 +219,8 @@ def save_best_model():
         optimizer.step()
         scheduler.step()
 
-    torch.save(model, './model/model-01.pkl')
+    torch.save(model, './models/model-01.pkl')
     print('model saved')
-
 
 model = GPTLanguageModel(vocab_size)
 m = model.to(device)
@@ -229,4 +228,8 @@ m = model.to(device)
 optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
 scheduler = StepLR(optimizer, step_size=1000, gamma=0.1)
 
-save_best_model()
+def main():
+    save_best_model()
+
+
+
