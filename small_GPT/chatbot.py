@@ -27,10 +27,9 @@ n_head = 1
 n_layer = 1
 dropout = 0.2
 
-print(device)
 
 chars = ""
-with open("./data/vocab.txt", 'r', encoding='utf-8') as f:
+with open("../data/vocab.txt", 'r', encoding='utf-8') as f:
         text = f.read()
         chars = sorted(list(set(text)))
         
@@ -187,7 +186,7 @@ class GPTLanguageModel(nn.Module):
 def main():
     model = GPTLanguageModel(vocab_size)
     print('loading model parameters...')
-    with open('./model-01.pkl', 'rb') as f:
+    with open('../model/model-01.pkl', 'rb') as f:
         model = pickle.load(f)
     print('loaded successfully!')
     m = model.to(device)

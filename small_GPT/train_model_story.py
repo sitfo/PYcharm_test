@@ -7,7 +7,7 @@ import random
 import argparse
 
 parser = argparse.ArgumentParser(description='This is a demonstration program')
-device = 'cuda' if torch.cuda.is_available() else 'mps'
+device = torch.device("cuda" if torch.cuda.is_available() else "mps")
 
 batch_size = 32
 block_size = 512
@@ -19,10 +19,9 @@ n_head = 4
 n_layer = 4
 dropout = 0.2
 
-print(device)
 
 chars = ""
-with open("./data/vocab.txt", 'r', encoding='utf-8') as f:
+with open("../data/vocab.txt", 'r', encoding='utf-8') as f:
     text = f.read()
     chars = sorted(list(set(text)))
 
@@ -208,7 +207,7 @@ def save_best_model():
             # Save the model if the validation loss is the best we've seen so far.
             if losses['val'] < best_val_loss:
                 best_val_loss = losses['val']
-                torch.save(model, './best_model.pkl')
+                torch.save(model, '../models/best_model.pkl')
                 print(f"New best model saved at step {iter} with val loss: {best_val_loss:.3f}")
 
         xb, yb = get_batch('train')
@@ -219,7 +218,7 @@ def save_best_model():
         optimizer.step()
         scheduler.step()
 
-    torch.save(model, './models/model-01.pkl')
+    torch.save(model, '../models/model-01.pkl')
     print('model saved')
 
 model = GPTLanguageModel(vocab_size)
