@@ -1,8 +1,9 @@
 name: transformers
 channels:
+  - anaconda
   - pytorch
-  - huggingface
   - conda-forge
+  - huggingface
   - defaults
 dependencies:
   - abseil-cpp=20230802.0=h313beb8_2
@@ -41,7 +42,7 @@ dependencies:
   - bzip2=1.0.8=h620ffc9_4
   - c-ares=1.19.1=h80987f9_0
   - ca-certificates=2024.2.2=hf0a4a13_0
-  - certifi=2024.2.2=py39hca03da5_0
+  - certifi=2024.2.2=pyhd8ed1ab_0
   - chardet=5.2.0=py39h2804cbe_1
   - charset-normalizer=2.0.4=pyhd3eb1b0_0
   - click=8.1.7=py39hca03da5_0
@@ -71,6 +72,7 @@ dependencies:
   - fonttools=4.49.0=py39h17cfd9d_0
   - freetype=2.12.1=h1192e45_0
   - frozenlist=1.4.0=py39h80987f9_0
+  - fsspec=2024.2.0=pyhca7485f_0
   - gettext=0.19.8.1=h049c9fb_1008
   - gflags=2.2.2=h313beb8_1
   - glog=0.5.0=h313beb8_1
@@ -87,12 +89,10 @@ dependencies:
   - hpack=4.0.0=pyh9f0ad1d_0
   - httpcore=1.0.4=pyhd8ed1ab_0
   - httpx=0.27.0=pyhd8ed1ab_0
-  - huggingface_hub=0.20.2=pyhd8ed1ab_0
   - hyperframe=6.0.1=pyhd8ed1ab_0
   - icu=73.1=h313beb8_0
   - idna=3.4=py39hca03da5_0
   - importlib-metadata=7.0.1=pyha770c72_0
-  - importlib_resources=6.1.2=pyhd8ed1ab_0
   - jinja2=3.1.3=py39hca03da5_0
   - joblib=1.2.0=py39hca03da5_0
   - jpeg=9e=h80987f9_1
@@ -109,10 +109,12 @@ dependencies:
   - langsmith=0.1.10=pyhd8ed1ab_0
   - lcms2=2.12=hba8e193_0
   - lerc=3.0=hc377ac9_0
+  - libblas=3.9.0=16_osxarm64_openblas
   - libboost=1.82.0=h0bc93f9_2
   - libbrotlicommon=1.0.9=h1a28f6b_7
   - libbrotlidec=1.0.9=h1a28f6b_7
   - libbrotlienc=1.0.9=h1a28f6b_7
+  - libcblas=3.9.0=16_osxarm64_openblas
   - libcurl=8.5.0=h3e2b118_0
   - libcxx=16.0.6=h4653b0c_0
   - libdeflate=1.17=h80987f9_1
@@ -126,6 +128,7 @@ dependencies:
   - libiconv=1.16=h1a28f6b_2
   - libidn2=2.3.3=he4db4b2_0
   - libjpeg-turbo=2.0.0=h1a28f6b_0
+  - liblapack=3.9.0=16_osxarm64_openblas
   - libnghttp2=1.57.0=h62f6fdd_0
   - libopenblas=0.3.21=h269037a_0
   - libpng=1.6.39=h80987f9_0
@@ -142,9 +145,11 @@ dependencies:
   - libzlib=1.2.13=h53f4e23_5
   - llvm-openmp=14.0.6=hc6e5704_0
   - lz4-c=1.9.4=h313beb8_0
+  - markdown-it-py=3.0.0=pyhd8ed1ab_0
   - markupsafe=2.1.3=py39h80987f9_0
   - marshmallow=3.21.0=pyhd8ed1ab_0
   - matplotlib-base=3.8.3=py39hbab7938_0
+  - mdurl=0.1.2=pyhd8ed1ab_0
   - mpc=1.1.0=h8c48613_1
   - mpfr=4.0.2=h695f6f0_1
   - mpmath=1.3.0=py39hca03da5_0
@@ -155,6 +160,7 @@ dependencies:
   - ncurses=6.4=h313beb8_0
   - nettle=3.8.1=h63371fa_1
   - networkx=3.1=py39hca03da5_0
+  - nltk=3.8.1=py39hca03da5_0
   - numexpr=2.8.7=py39hecc3335_0
   - numpy=1.26.3=py39h3b2db8e_0
   - numpy-base=1.26.3=py39ha9811e2_0
@@ -171,12 +177,15 @@ dependencies:
   - pillow=10.2.0=py39h80987f9_0
   - pip=23.3.1=py39hca03da5_0
   - pkgutil-resolve-name=1.3.10=pyhd8ed1ab_1
+  - platformdirs=4.2.0=pyhd8ed1ab_0
+  - pooch=1.8.1=pyhd8ed1ab_0
   - psutil=5.9.8=py39h17cfd9d_0
   - pyarrow=14.0.2=py39h68338f1_0
   - pyarrow-hotfix=0.6=pyhd8ed1ab_0
   - pydantic=2.6.2=pyhd8ed1ab_0
   - pydantic-core=2.16.3=py39h8fec3ad_0
   - pydub=0.25.1=pyhd8ed1ab_0
+  - pygments=2.17.2=pyhd8ed1ab_0
   - pyparsing=3.1.1=pyhd8ed1ab_0
   - pysocks=1.7.1=py39hca03da5_0
   - python=3.9.16=hea58f1e_0_cpython
@@ -192,6 +201,7 @@ dependencies:
   - re2=2022.04.01=hc377ac9_0
   - readline=8.2=h1a28f6b_0
   - referencing=0.33.0=pyhd8ed1ab_0
+  - regex=2023.12.25=py39h17cfd9d_0
   - requests=2.31.0=py39hca03da5_1
   - responses=0.13.3=pyhd3eb1b0_0
   - rpds-py=0.18.0=py39h9a407ce_0
@@ -247,13 +257,10 @@ dependencies:
       - chex==0.1.85
       - etils==1.5.2
       - flax==0.8.1
-      - fsspec==2024.2.0
       - huggingface-hub==0.20.3
       - importlib-resources==6.1.1
       - jax==0.4.24
       - jaxlib==0.4.24
-      - markdown-it-py==3.0.0
-      - mdurl==0.1.2
       - ml-dtypes==0.3.2
       - mlx==0.4.0
       - msgpack==1.0.7
@@ -262,9 +269,7 @@ dependencies:
       - optax==0.1.9
       - orbax-checkpoint==0.5.3
       - protobuf==4.25.3
-      - pygments==2.17.2
-      - regex==2023.12.25
       - rich==13.7.0
       - scipy==1.12.0
       - tensorstore==0.1.53
-prefix: /opt/homebrew/anaconda3/envs/trans
+prefix: /opt/homebrew/anaconda3/envs/transformers

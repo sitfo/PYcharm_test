@@ -6,7 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="9bdd6eb3-81f4-4564-b37d-4de897f88f69" name="Changes" comment="update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/model-01.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/model/model-01.pkl" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data-extract.py" beforeDir="false" afterPath="$PROJECT_DIR$/small_GPT/data-extract.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/environment.yml" beforeDir="false" afterPath="$PROJECT_DIR$/environment.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/hugging_face_files/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_train.py" beforeDir="false" afterPath="$PROJECT_DIR$/hugging_face_files/model_train.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/model_train_Longform.py" beforeDir="false" afterPath="$PROJECT_DIR$/hugging_face_files/model_train_Longform.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/prompt.py" beforeDir="false" afterPath="$PROJECT_DIR$/hugging_face_files/prompt.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -52,40 +57,40 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "Python.__init__.executor": "Run",
-    "Python.chatbot.executor": "Run",
-    "Python.data-extract.executor": "Run",
-    "Python.model_train_Longform.executor": "Run",
-    "Python.train_model_story.executor": "Profiler",
-    "Python.training.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "deletionFromPopupRequiresConfirmation": "false",
-    "git-widget-placeholder": "test",
-    "last_opened_file_path": "/Users/liujinlong/PycharmProjects/pythonProject",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;Python.__init__.executor&quot;: &quot;Run&quot;,
+    &quot;Python.chatbot.executor&quot;: &quot;Run&quot;,
+    &quot;Python.data-extract.executor&quot;: &quot;Run&quot;,
+    &quot;Python.model_train_Longform.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train_model_story.executor&quot;: &quot;Profiler&quot;,
+    &quot;Python.training.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;test&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/liujinlong/PycharmProjects/pythonProject&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/model" />
+      <recent name="$PROJECT_DIR$/hugging_face_files" />
       <recent name="$PROJECT_DIR$/small_GPT" />
+      <recent name="$PROJECT_DIR$/model" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/dataset" />
-      <recent name="$PROJECT_DIR$/data" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -166,7 +171,8 @@
       <workItem from="1709651257502" duration="58000" />
       <workItem from="1709651343777" duration="316000" />
       <workItem from="1709717081798" duration="2911000" />
-      <workItem from="1709723289052" duration="4703000" />
+      <workItem from="1709723289052" duration="5664000" />
+      <workItem from="1709734376903" duration="215000" />
     </task>
     <task id="LOCAL-00002" summary="update">
       <option name="closed" value="true" />
@@ -264,7 +270,15 @@
       <option name="project" value="LOCAL" />
       <updated>1709732832474</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="update">
+      <option name="closed" value="true" />
+      <created>1709733239310</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1709733239310</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
