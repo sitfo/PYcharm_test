@@ -11,10 +11,10 @@ device = 'cuda' if torch.cuda.is_available() else 'mps'
 
 batch_size = 32
 block_size = 512
-max_iters = 20000
+max_iters = 50000
 learning_rate = 3e-4
-eval_iters = 2000
-n_embd = 4096
+eval_iters = 1000
+n_embd = 384
 n_head = 4
 n_layer = 4
 dropout = 0.2
