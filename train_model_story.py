@@ -33,6 +33,7 @@ int_to_string = {i: ch for i, ch in enumerate(chars)}
 encode = lambda s: [string_to_int[c] for c in s]
 decode = lambda l: ''.join([int_to_string[i] for i in l])
 
+
 def get_random_chunk(split):
     filename = "./data/output_train.txt" if split == 'train' else "./data/output_val.txt"
     with open(filename, 'rb') as f:
@@ -94,6 +95,8 @@ class Head(nn.Module):
         v = self.value(x)  # (B,T,hs)
         out = wei @ v  # (B, T, T) @ (B, T, hs) -> (B, T, hs)
         return out
+
+
 class MultiHeadAttention(nn.Module):
     """ multiple heads of self-attention in parallel """
 
@@ -193,6 +196,7 @@ class GPTLanguageModel(nn.Module):
             index = torch.cat((index, index_next), dim=1)  # (B, T+1)
         return index
 
+
 def save_best_model():
     best_val_loss = float('inf')
 
@@ -217,6 +221,7 @@ def save_best_model():
 
     torch.save(model, './model/model-01.pkl')
     print('model saved')
+
 
 model = GPTLanguageModel(vocab_size)
 m = model.to(device)
