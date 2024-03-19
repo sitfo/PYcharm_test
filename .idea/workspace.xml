@@ -4,12 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bdd6eb3-81f4-4564-b37d-4de897f88f69" name="Changes" comment="update and push">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/vocab.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/vocab.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_build/__Init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_build/__Init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_build/datadownload.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_build/datadownload.py" afterDir="false" />
-    </list>
+    <list default="true" id="9bdd6eb3-81f4-4564-b37d-4de897f88f69" name="Changes" comment="update and push" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -31,6 +26,9 @@
     &quot;assignee&quot;: &quot;sitfo&quot;
   }
 }</component>
+  <component name="GitToolBoxStore">
+    <option name="projectConfigVersion" value="5" />
+  </component>
   <component name="GithubPullRequestsUISettings">
     <option name="selectedUrlAndAccountId">
       <UrlAndAccount>
@@ -352,7 +350,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710858151817</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="update and push">
+      <option name="closed" value="true" />
+      <created>1710867966127</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1710867966127</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -369,7 +375,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="origin/test" />
                       </list>
                     </value>
                   </entry>
@@ -386,6 +392,18 @@
     <MESSAGE value="update and push" />
     <option name="LAST_COMMIT_MESSAGE" value="update and push" />
   </component>
+  <component name="WfRunsListSearchHistory"><![CDATA[{
+  "history": [
+    {
+      "branch": "test",
+      "currentBranchFilter": true
+    }
+  ],
+  "lastFilter": {
+    "branch": "test",
+    "currentBranchFilter": true
+  }
+}]]></component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <default-breakpoints>
