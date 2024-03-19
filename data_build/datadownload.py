@@ -58,6 +58,11 @@ def main():
                 print(f"Skipping Book {i}: {title} (not in English)")
                 continue
 
+            # Skip if the title contains "letter" or "speech"
+            if "letter" in title.lower() or "speech" in title.lower():
+                print(f"Skipping Book {i}: {title} (contains 'letters' or 'speech')")
+                continue
+
             print(f"Book {i}: {title}, Link: {link}")
 
             filename = OUTPUT_DIR + title + FILE_EXTENSION
