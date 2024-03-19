@@ -254,6 +254,7 @@ dependencies:
   - zstd=1.5.5=hd90d995_0
   - pip:
       - absl-py==2.1.0
+      - beautifulsoup4==4.12.3
       - chex==0.1.85
       - etils==1.5.2
       - flax==0.8.1
@@ -261,6 +262,8 @@ dependencies:
       - importlib-resources==6.1.1
       - jax==0.4.24
       - jaxlib==0.4.24
+      - langid==1.1.6
+      - lxml==5.1.0
       - ml-dtypes==0.3.2
       - mlx==0.4.0
       - msgpack==1.0.7
@@ -271,5 +274,6 @@ dependencies:
       - protobuf==4.25.3
       - rich==13.7.0
       - scipy==1.12.0
+      - soupsieve==2.5
       - tensorstore==0.1.53
 prefix: /opt/homebrew/anaconda3/envs/transformers
