@@ -1,8 +1,6 @@
 import os
-import shutil
 import sys
 import time
-import zipfile
 
 import requests
 import langid
@@ -112,7 +110,3 @@ def main():
             next_page = next_link['href']
         else:
             next_page = None
-
-
-if __name__ == "__main__":
-    main()

@@ -167,7 +167,7 @@ dependencies:
   - openai=1.13.3=pyhd8ed1ab_0
   - openh264=2.3.0=h9a09cb3_0
   - openjpeg=2.3.0=h7a6adac_2
-  - openssl=3.2.1=h0d3ecfb_0
+  - openssl=3.2.1=h0d3ecfb_1
   - orc=1.7.4=hdca1487_1
   - orjson=3.9.15=py39h8fec3ad_0
   - p11-kit=0.24.1=h29577a5_0
@@ -238,7 +238,7 @@ dependencies:
   - tzdata=2023d=h04d1e81_0
   - unicodedata2=15.1.0=py39h0f82c59_0
   - unidecode=1.2.0=pyhd3eb1b0_0
-  - urllib3=2.1.0=py39hca03da5_1
+  - urllib3=2.2.1=pyhd8ed1ab_0
   - utf8proc=2.6.1=h80987f9_1
   - uvicorn=0.27.1=py39h2804cbe_0
   - websockets=11.0.3=py39h0f82c59_1
