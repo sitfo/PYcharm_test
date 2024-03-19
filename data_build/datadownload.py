@@ -7,6 +7,19 @@ import zipfile
 import requests
 import langid
 from bs4 import BeautifulSoup
+from requests.adapters import HTTPAdapter
+from requests.packages.urllib3.util.retry import Retry
+
+# Create a session
+session = requests.Session()
+
+# Set the retry parameters
+retry = Retry(total=5, backoff_factor=0.1, status_forcelist=[ 500, 502, 503, 504 ])
+
+# Mount it for both http and https usage
+adapter = HTTPAdapter(max_retries=retry)
+session.mount('http://', adapter)
+session.mount('https://', adapter)
 
 OUTPUT_DIR = "../source_data/"  # Directory to store downloaded books
 BASE_URL = "https://www.gutenberg.org"
@@ -54,7 +67,19 @@ def main():
                 print(f"Book '{title}' already exists in the output directory.")
                 continue
 
-            dl_link = BASE_URL + link
+            # Navigate to the book's page and find the text download link
+            book_page_response = requests.get(BASE_URL + link)
+            book_page_soup = BeautifulSoup(book_page_response.content, "lxml")
+            text_link_element = book_page_soup.find('a', string='Plain Text UTF-8')
+
+            if text_link_element is None:
+                print(f"Skipping Book {i}: {title} (Plain Text UTF-8 link not found)")
+                continue
+
+            text_link = text_link_element.get('href')
+
+            # Modify the dl_link to point to the actual text file of the book
+            dl_link = "https://www.gutenberg.org" + text_link
 
             print(f"Downloading Book {i}: {title}")
             start_time = time.perf_counter()

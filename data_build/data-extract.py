@@ -5,8 +5,10 @@ from tqdm import tqdm
 
 
 def extract_main_body(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
+    with open(file_path, 'rb') as file:  # Open the file in binary mode
         content = file.read()
+
+    content = content.decode('utf-8', errors='ignore').strip()
 
     start_regex = '\*\*\*\s?START OF TH(IS|E) PROJECT GUTENBERG EBOOK.*\*\*\*'
     end_regex = '\*\*\*\s?end of th(is|e) project gutenberg ebook'
@@ -17,7 +19,9 @@ def extract_main_body(file_path):
     if start_match and end_match:
         start_index = start_match.end()
         end_index = end_match.start()
-        return content[start_index:end_index]
+        main_body = content[start_index:end_index]
+        main_body = re.sub(r'\[Illustration\]', '', main_body, flags=re.IGNORECASE)
+        return main_body
 
     return ""
 
