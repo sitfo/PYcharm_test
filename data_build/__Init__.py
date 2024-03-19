@@ -1,17 +1,12 @@
-# Bild a running file with this sequence of commands: datadownload.py->data_extract.py
-
 
 import data_extract
 import datadownload
 
-author = ""
-input("Enter the name of the author: ")
-author = author.strip()
-
-#Find the author's page on Project Gutenberg
-
-
-
-#Run data extraction
-
-data_extract.main()
+if __name__ == "__main__":
+    """
+    Main function to download and extract data from the web.
+    You can change the content of the main function to download and extract data by changing the author's page number in datadownload.py
+    the data will be downloaded and extracted in the data folder.
+    """
+    datadownload.main()
+    data_extract.main()
