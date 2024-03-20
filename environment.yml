@@ -106,6 +106,7 @@ dependencies:
   - langchain=0.1.9=pyhd8ed1ab_0
   - langchain-community=0.0.24=pyhd8ed1ab_0
   - langchain-core=0.1.27=pyhd8ed1ab_0
+  - langdetect=1.0.9=pyhd8ed1ab_0
   - langsmith=0.1.10=pyhd8ed1ab_0
   - lcms2=2.12=hba8e193_0
   - lerc=3.0=hc377ac9_0
