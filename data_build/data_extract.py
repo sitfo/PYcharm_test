@@ -2,6 +2,7 @@ import os
 import re
 import nltk
 from tqdm import tqdm
+from langdetect import detect
 
 
 def extract_main_body(file_path):
@@ -22,8 +23,15 @@ def extract_main_body(file_path):
         main_body = content[start_index:end_index]
         main_body = re.sub(r'\[Illustration\]', '', main_body,
                            flags=re.IGNORECASE)  # Remove all instances of "[Illustration]" (ignoring case)
-        return main_body
-
+        main_body = main_body.replace("\xa0", "")
+        # Skip non-English content
+        try:
+            if detect(main_body) == 'en':
+                return main_body
+            else:
+                return ""
+        except:
+            return ""  # If language detection fails, return an empty string
     return ""
 
 
