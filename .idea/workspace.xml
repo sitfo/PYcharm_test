@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9bdd6eb3-81f4-4564-b37d-4de897f88f69" name="Changes" comment="update and push">
+    <list default="true" id="9bdd6eb3-81f4-4564-b37d-4de897f88f69" name="Changes" comment="update the data extract">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/output_train.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/output_train.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/output_val.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/output_val.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data/vocab.txt" beforeDir="false" afterPath="$PROJECT_DIR$/data/vocab.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/data_build/data_extract.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_build/data_extract.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_build/datadownload.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_build/datadownload.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -192,7 +193,7 @@
       <workItem from="1710924824643" duration="2081000" />
       <workItem from="1710926912947" duration="14000" />
       <workItem from="1710926936144" duration="71000" />
-      <workItem from="1710927018132" duration="93000" />
+      <workItem from="1710927018132" duration="1091000" />
     </task>
     <task id="LOCAL-00002" summary="update">
       <option name="closed" value="true" />
@@ -386,7 +387,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710924992311</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="update the data extract">
+      <option name="closed" value="true" />
+      <created>1710927165871</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1710927165871</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -412,7 +421,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="update" />
     <MESSAGE value="update and push" />
-    <option name="LAST_COMMIT_MESSAGE" value="update and push" />
+    <MESSAGE value="update the data extract" />
+    <option name="LAST_COMMIT_MESSAGE" value="update the data extract" />
   </component>
   <component name="WfRunsListSearchHistory"><![CDATA[{
   "history": [
@@ -459,7 +469,7 @@
     <SUITE FILE_PATH="coverage/pythonProject$model_train.coverage" NAME="model_train Coverage Results" MODIFIED="1709133655947" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonProject$data_extract.coverage" NAME="data-extract Coverage Results" MODIFIED="1709306987567" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonProject$chatbot.coverage" NAME="chatbot Coverage Results" MODIFIED="1709291736282" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/PYcharm_test$__Init__.coverage" NAME="__Init__ Coverage Results" MODIFIED="1710926688611" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_build" />
+    <SUITE FILE_PATH="coverage/PYcharm_test$__Init__.coverage" NAME="__Init__ Coverage Results" MODIFIED="1710927441009" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_build" />
     <SUITE FILE_PATH="coverage/pythonProject$prompt.coverage" NAME="prompt Coverage Results" MODIFIED="1709113848646" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonProject$model_train_Longform.coverage" NAME="model_train_Longform Coverage Results" MODIFIED="1709214855200" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/pythonProject$generate.coverage" NAME="generate Coverage Results" MODIFIED="1709115984038" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />

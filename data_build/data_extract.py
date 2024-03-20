@@ -78,6 +78,7 @@ def main():
                 characters = set(text)
                 vocab.update(characters)
 
+    # Write the vocabulary to a file, save all words and characters
     with open(vocab_file, "w", encoding="utf-8") as vfile:
         for char in vocab:
             vfile.write(char + '\n')

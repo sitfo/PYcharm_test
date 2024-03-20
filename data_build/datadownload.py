@@ -53,10 +53,10 @@ def main():
             link = book.select_one('a.link')['href']
 
             # Check if the title is in English
-            lang, _ = langid.classify(title)
-            if lang != 'en':
-                print(f"Skipping Book {i}: {title} (not in English)")
-                continue
+            # lang, _ = langid.classify(title)
+            # if lang != 'en':
+            #     print(f"Skipping Book {i}: {title} (not in English)")
+            #     continue
 
             # Skip if the title contains "letter" or "speech"
             if "letter" in title.lower() or "speech" in title.lower():
