@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="com.obiscr.chatgpt.settings.EasyCodeState">
-    <option name="projectFiles" value="$PROJECT_DIR$/generate.py;/Users/liujinlong/PycharmProjects/pythonProject/main.py;/Users/liujinlong/PycharmProjects/pythonProject/TEST.py" />
-    <option name="forceFullIndex" value="false" />
-    <option name="fileSummaryMaps" value="{&quot;/Users/liujinlong/PycharmProjects/pythonProject&quot;:&quot;{\&quot;/main.py\&quot;:\&quot;\\ndef download_data(url, save_path):\\nclass TextDataset(Dataset):\\n    def __getitem__(self, idx):\\nclass RGNN(nn.Module):\\n    def __init__(self, vocab_size, embedding_dim, lstm_hidden_dim, gru_hidden_dim, num_layers, lstm_drop\\n    def forward(self, x):\\ndef train_model(model, dataloader, criterion, optimizer, num_epochs, val_dataloader\\u003dNone):\&quot;,\&quot;/generate.py\&quot;:\&quot;\\ndef generate_text(model, start_text, length, temperature):\&quot;,\&quot;/TEST.py\&quot;:\&quot;\&quot;}&quot;}" />
-  </component>
-</project>
