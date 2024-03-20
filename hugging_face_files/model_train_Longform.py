@@ -12,7 +12,7 @@ def load_and_tokenize_data():
     tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-cased")
 
     def tokenize_function(examples):
-        return tokenizer(examples["input"], examples["output"], padding="max_length", truncation=True)
+        return tokenizer(examples["text"], padding="max_length", truncation=True)
 
     tokenized_datasets = dataset.map(tokenize_function, batched=True)
     train_dataset = tokenized_datasets["train"].shuffle(seed=42)
@@ -49,7 +49,7 @@ def main(device):
         model=model,
         args=training_args,
         train_dataset=train_dataset,
-        eval_dataset=eval_dataset,
+        eval_dataset=test_dataset,
         tokenizer=tokenizer,
         compute_metrics=compute_metrics,
         decvice=device
