@@ -5,16 +5,10 @@ import numpy as np
 import evaluate
 
 
-def load_data(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        data = file.read().splitlines()
-    return data
-
-
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
-                                              "test": "../data/output_test.txt",
-                                              "validation": "../data/output_val.txt"})
+                                               "test": "../data/output_test.txt",
+                                               "validation": "../data/output_val.txt"})
     tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-cased")
 
     def tokenize_function(examples):
