@@ -4,6 +4,7 @@ import torch
 import numpy as np
 import evaluate
 
+metric = evaluate.load("f1")
 
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
@@ -28,7 +29,6 @@ def create_model():
 
 
 def compute_metrics(eval_pred):
-    metric = evaluate.load("accuracy")
     logits, labels = eval_pred
     predictions = np.argmax(logits, axis=-1)
     return metric.compute(predictions=predictions, references=labels)
