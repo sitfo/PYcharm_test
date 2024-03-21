@@ -1,10 +1,6 @@
-from datasets import load_dataset
-from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
 import torch
-import numpy as np
-import evaluate
-
-metric = evaluate.load("f1")
+from datasets import load_dataset
+from transformers import AutoTokenizer, AutoModelForCausalLM, AdamW
 
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
@@ -20,42 +16,42 @@ def load_and_tokenize_data():
 
     return train_dataset, val_dataset, tokenizer
 
-
 def create_model():
     model = AutoModelForCausalLM.from_pretrained("google-bert/bert-base-cased")
     return model
 
+def compute_loss(model, data):
+    inputs = data['input_ids'].to(device)
+    outputs = model(inputs, labels=inputs)  # Use the inputs as the labels
+    return outputs.loss
 
-def compute_metrics(eval_pred):
-    logits, labels = eval_pred
-    predictions = np.argmax(logits, axis=-1)
-    return metric.compute(predictions=predictions, references=labels)
+def train(model, train_loader, val_loader, device, epochs=3):
+    optimizer = AdamW(model.parameters(), lr=1e-5)
 
+    for epoch in range(epochs):
+        model.train()
+        for batch in train_loader:
+            batch = {k: v.to(device) for k, v in batch.items()}
+            loss = compute_loss(model, batch)
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad()
 
-def train_model(trainer):
-    trainer.train()
-
-
-def main(device):
-    train_dataset, val_dataset, tokenizer = load_and_tokenize_data()
-    model = create_model()
-    training_args = TrainingArguments(
-        output_dir="test_trainer",
-        evaluation_strategy="epoch",
-    )
-    trainer = Trainer(
-        model=model,
-        args=training_args,
-        train_dataset=train_dataset,
-        eval_dataset=val_dataset,
-        tokenizer=tokenizer,
-        compute_metrics=compute_metrics,
-        decvice=device
-    )
-
-    train_model(trainer)
-
+        model.eval()
+        total_loss = 0
+        for batch in val_loader:
+            batch = {k: v.to(device) for k, v in batch.items()}
+            with torch.no_grad():
+                loss = compute_loss(model, batch)
+                total_loss += loss.item()
+        print(f'Validation Loss: {total_loss / len(val_loader)}')
 
 if __name__ == "__main__":
-    decvice = torch.device("cuda") if torch.cuda.is_available() else torch.device("mps")
-    main(decvice)
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
+    train_dataset, val_dataset, tokenizer = load_and_tokenize_data()
+    model = create_model().to(device)
+
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32)
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=32)
+
+    train(model, train_loader, val_loader, device)
