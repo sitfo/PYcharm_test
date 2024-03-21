@@ -1,5 +1,5 @@
 from datasets import load_dataset
-from transformers import AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
+from transformers import AutoTokenizer, AutoModelForCausalLM, Trainer, TrainingArguments
 import torch
 import numpy as np
 import evaluate
@@ -24,7 +24,7 @@ def load_and_tokenize_data():
 
 
 def create_model():
-    model = AutoModelForSequenceClassification.from_pretrained("google-bert/bert-base-cased", num_labels=5)
+    model = AutoModelForCausalLM.from_pretrained("google-bert/bert-base-cased")
     return model
 
 
