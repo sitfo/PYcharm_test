@@ -7,11 +7,11 @@ then
     exit
 fi
 
-# Create a virtual environment
-python3.9.10 -m venv venv
+# Create a virtual environment named "models"
+python3.9.10 -m venv models
 
 # Activate the virtual environment
-source venv/bin/activate
+source models/bin/activate
 
 # Check if requirements.txt exists in the current directory
 if [ ! -f requirements.txt ]; then
