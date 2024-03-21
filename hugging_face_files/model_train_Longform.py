@@ -8,7 +8,6 @@ metric = evaluate.load("f1")
 
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
-                                               "test": "../data/output_test.txt",
                                                "validation": "../data/output_val.txt"})
     tokenizer = AutoTokenizer.from_pretrained("google-bert/bert-base-cased")
 
@@ -18,9 +17,8 @@ def load_and_tokenize_data():
     tokenized_datasets = dataset.map(tokenize_function, batched=True)
     train_dataset = tokenized_datasets["train"].shuffle(seed=42)
     val_dataset = tokenized_datasets["validation"].shuffle(seed=42)
-    test_dataset = tokenized_datasets["test"].shuffle(seed=42)
 
-    return train_dataset, val_dataset, test_dataset, tokenizer
+    return train_dataset, val_dataset, tokenizer
 
 
 def create_model():
@@ -39,7 +37,7 @@ def train_model(trainer):
 
 
 def main(device):
-    train_dataset, val_dataset, test_dataset, tokenizer = load_and_tokenize_data()
+    train_dataset, val_dataset, tokenizer = load_and_tokenize_data()
     model = create_model()
     training_args = TrainingArguments(
         output_dir="test_trainer",
@@ -49,7 +47,7 @@ def main(device):
         model=model,
         args=training_args,
         train_dataset=train_dataset,
-        eval_dataset=test_dataset,
+        eval_dataset=val_dataset,
         tokenizer=tokenizer,
         compute_metrics=compute_metrics,
         decvice=device

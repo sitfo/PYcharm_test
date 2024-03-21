@@ -47,22 +47,18 @@ def main():
     folder_path = "../source_data"
     output_file_train = "../data/output_train.txt"
     output_file_val = "../data/output_val.txt"
-    output_file_test = "../data/output_test.txt"
     output_file_train_json = "../data/output_train.json"
     output_file_val_json = "../data/output_val.json"
-    output_file_test_json = "../data/output_test.json"
     # vocab_file = "../data/vocab.txt"
 
     files = txt_files_in_dir(folder_path)
     total_files = len(files)
 
     # Calculate the split indices
-    split_index_train = int(total_files * 0.8)  # 80% for training
-    split_index_val = int(total_files * 0.9)  # 10% for validation, 10% for testing
+    split_index_train = int(total_files * 0.9)  # 90% for training, 10% for validation
 
     files_train = files[:split_index_train]
-    files_val = files[split_index_train:split_index_val]
-    files_test = files[split_index_val:]
+    files_val = files[split_index_train:]
 
     # Process the files for training and validation separately
     vocab = set()
@@ -78,15 +74,6 @@ def main():
 
     with open(output_file_val, "w", encoding="utf-8") as outfile:
         for filename in tqdm(files_val, total=len(files_val)):
-            file_path = os.path.join(folder_path, filename)
-            text = extract_main_body(file_path)
-            if text:
-                outfile.write(text)
-                characters = set(text)
-                vocab.update(characters)
-
-    with open(output_file_test, "w", encoding="utf-8") as outfile:
-        for filename in tqdm(files_test, total=len(files_test)):
             file_path = os.path.join(folder_path, filename)
             text = extract_main_body(file_path)
             if text:
@@ -112,16 +99,6 @@ def main():
 
     with open(output_file_val_json, "w", encoding="utf-8") as outfile:
         for filename in tqdm(files_val, total=len(files_val)):
-            file_path = os.path.join(folder_path, filename)
-            text = extract_main_body(file_path)
-            if text:
-                data = {"filename": filename, "text": text}
-                outfile.write(json.dumps(data) + "\n")
-                characters = set(text)
-                vocab.update(characters)
-
-    with open(output_file_test_json, "w", encoding="utf-8") as outfile:
-        for filename in tqdm(files_test, total=len(files_test)):
             file_path = os.path.join(folder_path, filename)
             text = extract_main_body(file_path)
             if text:
