@@ -1,6 +1,7 @@
 import torch
 from datasets import load_dataset
 from transformers import AutoTokenizer, AutoModelForCausalLM, AdamW
+from torch.utils.tensorboard import SummaryWriter
 
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
@@ -27,6 +28,8 @@ def compute_loss(model, data):
 
 def train(model, train_loader, val_loader, device, epochs=3):
     optimizer = AdamW(model.parameters(), lr=1e-5)
+    best_loss = float('inf')
+    writer = SummaryWriter()  # Create a SummaryWriter object
 
     for epoch in range(epochs):
         model.train()
@@ -37,6 +40,8 @@ def train(model, train_loader, val_loader, device, epochs=3):
             optimizer.step()
             optimizer.zero_grad()
 
+        torch.cuda.empty_cache()  # Free up GPU memory
+
         model.eval()
         total_loss = 0
         for batch in val_loader:
@@ -44,7 +49,13 @@ def train(model, train_loader, val_loader, device, epochs=3):
             with torch.no_grad():
                 loss = compute_loss(model, batch)
                 total_loss += loss.item()
-        print(f'Validation Loss: {total_loss / len(val_loader)}')
+                if loss < best_loss:
+                    best_loss = loss
+                    torch.save(model.state_dict(), './model/best_model.pt')
+        avg_loss = total_loss / len(val_loader)
+        writer.add_scalar('Loss/train', avg_loss, epoch)  # Log the average loss to TensorBoard
+
+    writer.close()  # Close the SummaryWriter when you're done with it
 
 if __name__ == "__main__":
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
