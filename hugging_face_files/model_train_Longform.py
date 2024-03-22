@@ -1,14 +1,11 @@
-import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import matplotlib.pyplot as plt
-from tqdm import tqdm
 from torch.utils.data import DataLoader
-from torch.utils.tensorboard import SummaryWriter
 from datasets import load_dataset
-from transformers import GPT2TokenizerFast, AutoModelForCausalLM, AdamW
-
+from transformers import GPT2TokenizerFast, AutoModelForCausalLM
+from tqdm import tqdm
+import os
 
 class StoryDataset(torch.utils.data.Dataset):
     def __init__(self, tokenized_texts):
@@ -19,20 +16,15 @@ class StoryDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         tokenized_text = self.tokenized_texts[idx]
-        input_ids = tokenized_text['input_ids']
-        attention_mask = tokenized_text['attention_mask']
-        return {'input_ids': torch.tensor(input_ids), 'attention_mask': torch.tensor(attention_mask)}
-
+        return {'input_ids': tokenized_text['input_ids'], 'attention_mask': tokenized_text['attention_mask']}
 
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
                                                "validation": "../data/output_val.txt"})
     tokenizer = GPT2TokenizerFast.from_pretrained('gpt2')
 
-    # Add padding token
-    tokenizer.add_special_tokens({'pad_token': '[PAD]'})  # Add padding token to tokenizer
+    tokenizer.add_special_tokens({'pad_token': '[PAD]'})
 
-    # Preprocess text data
     def tokenize_function(examples):
         return tokenizer(examples["text"], padding="max_length", truncation=True, max_length=512, return_tensors='pt')
 
@@ -40,26 +32,18 @@ def load_and_tokenize_data():
     train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(1000))
     val_dataset = tokenized_datasets["validation"].shuffle(seed=42).select(range(1000))
 
-    train_texts = []
-    for train_example in train_dataset:
-        train_texts.append({'input_ids': train_example['input_ids'], 'attention_mask': train_example['attention_mask']})
-
-    val_texts = []
-    for val_example in val_dataset:
-        val_texts.append({'input_ids': val_example['input_ids'], 'attention_mask': val_example['attention_mask']})
+    train_texts = [{'input_ids': example['input_ids'], 'attention_mask': example['attention_mask']} for example in train_dataset]
+    val_texts = [{'input_ids': example['input_ids'], 'attention_mask': example['attention_mask']} for example in val_dataset]
 
     return train_texts, val_texts, tokenizer
-
 
 def create_model():
     model = AutoModelForCausalLM.from_pretrained("gpt2")
     return model
 
-
 def train(model, train_loader, val_loader, device, epochs=3, model_save_dir="../model"):
     os.makedirs(model_save_dir, exist_ok=True)
 
-    writer = SummaryWriter()
     criterion = nn.CrossEntropyLoss()
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
 
@@ -85,7 +69,6 @@ def train(model, train_loader, val_loader, device, epochs=3, model_save_dir="../
 
             running_loss += loss.item()
             if i % 100 == 99:
-                writer.add_scalar('training loss', running_loss / 100, epoch * len(train_loader) + i)
                 running_loss = 0.0
 
             progress_bar.set_description(f"Epoch {epoch + 1}/{epochs}")
@@ -107,18 +90,13 @@ def train(model, train_loader, val_loader, device, epochs=3, model_save_dir="../
                 val_loss += loss.item()
 
         avg_val_loss = val_loss / len(val_loader)
-        writer.add_scalar('validation loss', avg_val_loss, epoch)
 
         if avg_val_loss < best_val_loss:
             best_val_loss = avg_val_loss
             torch.save(model.state_dict(), best_model_path)
 
-    # Close tensorboard writer
-    writer.close()
-
-
 if __name__ == "__main__":
-    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("mps")
+    device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
     print(device)
     train_texts, val_texts, tokenizer = load_and_tokenize_data()
 
