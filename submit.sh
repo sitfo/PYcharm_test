@@ -1,6 +1,8 @@
 #!/bin/bash
-#SBATCH --ntasks=2
+#SBATCH --ntasks=16
+#SBATCH --time=240:0
 #SBATCH --qos=bbgpu
+#SBATCH --gres=gpu:2
 
 set -e
 
