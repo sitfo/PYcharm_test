@@ -13,4 +13,6 @@ module load PyTorch/2.0.1-foss-2022a-CUDA-11.7.0
 
 pip install --user -r requirements.txt
 
+cd ./hugging_face_files
+
 python hugging_face_files/model_train_longform.py
