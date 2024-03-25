@@ -13,8 +13,11 @@ module load PyTorch/2.0.1-foss-2022a-CUDA-11.7.0
 
 pip install --user -r requirements.txt
 
-# Navigate to the directory of the script
-cd "$(dirname "$0")"
+# Set the absolute path to the directory containing the Python script
+SCRIPT_DIR="/rds/homes/j/jxl1872/PYcharm_test/hugging_face_files"
 
-# Run the Python script in the subfolder
-python hugging_face_files/model_train_longform.py
+# Navigate to the directory
+cd "$SCRIPT_DIR"
+
+# Run the Python script
+python model_train_longform.py
