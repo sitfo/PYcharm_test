@@ -16,7 +16,8 @@ class StoryDataset(Dataset):
 
     def __getitem__(self, idx):
         tokenized_text = self.tokenized_texts[idx]
-        return tokenized_text['input_ids'], tokenized_text['attention_mask']
+        input_ids = tokenized_text['input_ids']
+        return input_ids
 
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
@@ -32,8 +33,8 @@ def load_and_tokenize_data():
     train_dataset = tokenized_datasets["train"].shuffle(seed=42)
     val_dataset = tokenized_datasets["validation"].shuffle(seed=42)
 
-    train_texts = [{'input_ids': example['input_ids'], 'attention_mask': example['attention_mask']} for example in train_dataset]
-    val_texts = [{'input_ids': example['input_ids'], 'attention_mask': example['attention_mask']} for example in val_dataset]
+    train_texts = [{'input_ids': example['input_ids']} for example in train_dataset]
+    val_texts = [{'input_ids': example['input_ids']} for example in val_dataset]
 
     return train_texts, val_texts, tokenizer
 
@@ -55,11 +56,11 @@ def train(model, train_loader, val_loader, device, epochs=3, model_save_dir="../
         running_loss = 0.0
         progress_bar = tqdm(enumerate(train_loader), total=len(train_loader))
         for i, batch in progress_bar:
-            inputs, masks = batch[0].to(device), batch[1].to(device)
+            inputs = batch.to(device)
 
             optimizer.zero_grad()
 
-            outputs = model(inputs, attention_mask=masks)
+            outputs = model(inputs)
             logits = outputs.logits
 
             loss = criterion(logits.view(-1, logits.shape[-1]), inputs.view(-1))
@@ -79,9 +80,9 @@ def train(model, train_loader, val_loader, device, epochs=3, model_save_dir="../
         val_loss = 0.0
         with torch.no_grad():
             for i, batch in enumerate(val_loader):
-                inputs, masks = batch[0].to(device), batch[1].to(device)
+                inputs = batch.to(device)
 
-                outputs = model(inputs, attention_mask=masks)
+                outputs = model(inputs)
                 logits = outputs.logits
 
                 loss = criterion(logits.view(-1, logits.shape[-1]), inputs.view(-1))
