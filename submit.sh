@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH --ntasks=2
 #SBATCH --qos=bbgpu
-#SBATCH --mail-type=ALL
 
 set -e
 
