@@ -1,13 +1,13 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, Dataset
 from datasets import load_dataset
 from transformers import GPT2TokenizerFast, AutoModelForCausalLM
 from tqdm import tqdm
 import os
 
-class StoryDataset(torch.utils.data.Dataset):
+class StoryDataset(Dataset):
     def __init__(self, tokenized_texts):
         self.tokenized_texts = tokenized_texts
 
@@ -16,7 +16,7 @@ class StoryDataset(torch.utils.data.Dataset):
 
     def __getitem__(self, idx):
         tokenized_text = self.tokenized_texts[idx]
-        return {'input_ids': tokenized_text['input_ids'], 'attention_mask': tokenized_text['attention_mask']}
+        return tokenized_text['input_ids'], tokenized_text['attention_mask']
 
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
@@ -37,11 +37,6 @@ def load_and_tokenize_data():
 
     return train_texts, val_texts, tokenizer
 
-def collate_fn(batch):
-    input_ids = [torch.tensor(item['input_ids']) for item in batch]
-    attention_mask = [torch.tensor(item['attention_mask']) for item in batch]
-    return {'input_ids': torch.stack(input_ids), 'attention_mask': torch.stack(attention_mask)}
-
 def create_model():
     model = AutoModelForCausalLM.from_pretrained("gpt2")
     return model
@@ -60,8 +55,7 @@ def train(model, train_loader, val_loader, device, epochs=3, model_save_dir="../
         running_loss = 0.0
         progress_bar = tqdm(enumerate(train_loader), total=len(train_loader))
         for i, batch in progress_bar:
-            inputs = batch['input_ids'].to(device)
-            masks = batch['attention_mask'].to(device)
+            inputs, masks = batch[0].to(device), batch[1].to(device)
 
             optimizer.zero_grad()
 
@@ -85,8 +79,7 @@ def train(model, train_loader, val_loader, device, epochs=3, model_save_dir="../
         val_loss = 0.0
         with torch.no_grad():
             for i, batch in enumerate(val_loader):
-                inputs = batch['input_ids'].to(device)
-                masks = batch['attention_mask'].to(device)
+                inputs, masks = batch[0].to(device), batch[1].to(device)
 
                 outputs = model(inputs, attention_mask=masks)
                 logits = outputs.logits
@@ -109,7 +102,7 @@ if __name__ == "__main__":
     val_dataset = StoryDataset(val_texts)
 
     model = create_model().to(device)
-    train_loader = DataLoader(train_dataset, batch_size=512, shuffle=True, collate_fn=collate_fn)
-    val_loader = DataLoader(val_dataset, batch_size=512, shuffle=False, collate_fn=collate_fn)
+    train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False)
 
     train(model, train_loader, val_loader, device)
