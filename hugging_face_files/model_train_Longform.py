@@ -29,13 +29,18 @@ def load_and_tokenize_data():
         return tokenizer(examples["text"], padding="max_length", truncation=True, max_length=512, return_tensors='pt')
 
     tokenized_datasets = dataset.map(tokenize_function, batched=True, num_proc=1, remove_columns=["text"])
-    train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(1000))
-    val_dataset = tokenized_datasets["validation"].shuffle(seed=42).select(range(1000))
+    train_dataset = tokenized_datasets["train"].shuffle(seed=42)
+    val_dataset = tokenized_datasets["validation"].shuffle(seed=42)
 
     train_texts = [{'input_ids': example['input_ids'], 'attention_mask': example['attention_mask']} for example in train_dataset]
     val_texts = [{'input_ids': example['input_ids'], 'attention_mask': example['attention_mask']} for example in val_dataset]
 
     return train_texts, val_texts, tokenizer
+
+def collate_fn(batch):
+    input_ids = [torch.tensor(item['input_ids']) for item in batch]
+    attention_mask = [torch.tensor(item['attention_mask']) for item in batch]
+    return {'input_ids': torch.stack(input_ids), 'attention_mask': torch.stack(attention_mask)}
 
 def create_model():
     model = AutoModelForCausalLM.from_pretrained("gpt2")
@@ -104,7 +109,7 @@ if __name__ == "__main__":
     val_dataset = StoryDataset(val_texts)
 
     model = create_model().to(device)
-    train_loader = DataLoader(train_dataset, batch_size=8, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=8, shuffle=False)
+    train_loader = DataLoader(train_dataset, batch_size=512, shuffle=True, collate_fn=collate_fn)
+    val_loader = DataLoader(val_dataset, batch_size=512, shuffle=False, collate_fn=collate_fn)
 
     train(model, train_loader, val_loader, device)
