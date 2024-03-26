@@ -77,7 +77,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
 
 
 if __name__ == "__main__":
-    device = torch.device("cuda:0,1" if torch.cuda.is_available() else "mps")
+    device = torch.device("cuda:0,1" if torch.cuda.is_available() else "cpu")
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
 
