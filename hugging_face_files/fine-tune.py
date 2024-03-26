@@ -4,6 +4,7 @@ import torch.nn.functional as F
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
+from torch.nn import DataParallel
 
 # Set the CUDA_VISIBLE_DEVICES environment variable
 os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"  # Use the first two GPUs
@@ -81,6 +82,11 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
+
+    # If there are multiple GPUs available, wrap the model with DataParallel
+    if torch.cuda.device_count() > 1:
+        print("Let's use", torch.cuda.device_count(), "GPUs!")
+        model = DataParallel(model)
 
     train_path = '../data/output_train.txt'
     test_path = '../data/output_val.txt'
