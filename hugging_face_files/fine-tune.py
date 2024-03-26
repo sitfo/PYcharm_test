@@ -47,6 +47,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         overwrite_output_dir=True,
         num_train_epochs=3,
         per_device_train_batch_size=4,
+        per_device_eval_batch_size=2,
         save_steps=10_000,
         save_total_limit=2,
         evaluation_strategy="epoch",  # Add this line to perform evaluation
