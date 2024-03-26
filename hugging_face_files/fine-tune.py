@@ -54,8 +54,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         save_total_limit=2,
         evaluation_strategy="epoch",  # Add this line to perform evaluation
         save_strategy="epoch",  # Save strategy is set to "epoch" to match the evaluation strategy
-        load_best_model_at_end=True,  # Add this line to load the best model at the end
-        _n_gpu=2,  # Number of GPUs to use. Change this to match your setup.
+        load_best_model_at_end=True,  # Add this line to load the best model at the endΩ
     )
 
     data_collator = DataCollatorForLanguageModeling(
