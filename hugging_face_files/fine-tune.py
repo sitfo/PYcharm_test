@@ -4,6 +4,8 @@ import torch.nn.functional as F
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
+from torch.nn.parallel import DataParallel
+
 
 def load_dataset(train_path, test_path, tokenizer):
     """
@@ -90,6 +92,8 @@ def train(model, train_dataset, test_dataset, output_dir, device):
     )
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
 
+    # Wrap the model with DataParallel
+    model = DataParallel(model)
 
     trainer = Trainer(
         model=model,
