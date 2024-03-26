@@ -5,8 +5,18 @@ from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 
-
 def load_dataset(train_path, test_path, tokenizer):
+    """
+    Load the training and testing datasets.
+
+    Args:
+        train_path (str): The path to the training dataset.
+        test_path (str): The path to the testing dataset.
+        tokenizer (GPT2Tokenizer): The tokenizer to be used.
+
+    Returns:
+        Tuple[TextDataset, TextDataset]: The training and testing datasets.
+    """
     train_dataset = TextDataset(
         tokenizer=tokenizer,
         file_path=train_path,
@@ -21,6 +31,15 @@ def load_dataset(train_path, test_path, tokenizer):
 
 
 def compute_metrics(eval_pred):
+    """
+    Compute the metrics for evaluation.
+
+    Args:
+        eval_pred (Tuple[Tensor, Tensor]): The predictions and labels.
+
+    Returns:
+        dict: The computed metrics.
+    """
     predictions, labels = eval_pred
     predictions = predictions[0]  # get the logits
     labels = labels[0]  # get the true labels
@@ -42,6 +61,16 @@ def compute_metrics(eval_pred):
 
 
 def train(model, train_dataset, test_dataset, output_dir, device):
+    """
+    Train the model.
+
+    Args:
+        model (GPT2LMHeadModel): The model to be trained.
+        train_dataset (TextDataset): The training dataset.
+        test_dataset (TextDataset): The testing dataset.
+        output_dir (str): The directory where the model will be saved.
+        device (torch.device): The device where the model will be trained.
+    """
     training_args = TrainingArguments(
         output_dir=output_dir,
         overwrite_output_dir=True,
@@ -53,6 +82,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         evaluation_strategy="epoch",  # Add this line to perform evaluation
         save_strategy="epoch",  # Save strategy is set to "epoch" to match the evaluation strategy
         load_best_model_at_end=True,  # Add this line to load the best model at the endΩ
+        gradient_accumulation_steps=4,
     )
 
     data_collator = DataCollatorForLanguageModeling(
@@ -77,6 +107,9 @@ def train(model, train_dataset, test_dataset, output_dir, device):
 
 
 if __name__ == "__main__":
+    """
+    Main function to execute the training process.
+    """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
