@@ -4,7 +4,6 @@ import torch.nn.functional as F
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
-from accelerate import Accelerator
 
 
 def load_dataset(train_path, test_path, tokenizer):
@@ -43,7 +42,6 @@ def compute_metrics(eval_pred):
 
 
 def train(model, train_dataset, test_dataset, output_dir, device):
-    # Move the model to the device
     training_args = TrainingArguments(
         output_dir=output_dir,
         overwrite_output_dir=True,
@@ -62,11 +60,6 @@ def train(model, train_dataset, test_dataset, output_dir, device):
     )
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
 
-    # Create an instance of Accelerator
-    accelerator = Accelerator()
-
-    # Prepare your model and optimizer
-    model, optimizer = accelerator.prepare(model, optimizer)
 
     trainer = Trainer(
         model=model,
@@ -84,15 +77,9 @@ def train(model, train_dataset, test_dataset, output_dir, device):
 
 
 if __name__ == "__main__":
-    device = torch.device("cuda:0,1" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda:0,1" if torch.cuda.is_available() else "mps")
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
-
-    # Create an instance of Accelerator
-    accelerator = Accelerator()
-
-    # Prepare your model
-    model = accelerator.prepare(model)
 
     train_path = '../data/output_train.txt'
     test_path = '../data/output_val.txt'
