@@ -5,6 +5,8 @@ from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 
+# Set the CUDA_VISIBLE_DEVICES environment variable
+os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"  # Use the first two GPUs
 
 def load_dataset(train_path, test_path, tokenizer):
     train_dataset = TextDataset(
@@ -53,6 +55,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         evaluation_strategy="epoch",  # Add this line to perform evaluation
         save_strategy="epoch",  # Save strategy is set to "epoch" to match the evaluation strategy
         load_best_model_at_end=True,  # Add this line to load the best model at the end
+        _n_gpu=2,  # Number of GPUs to use. Change this to match your setup.
     )
 
     data_collator = DataCollatorForLanguageModeling(
