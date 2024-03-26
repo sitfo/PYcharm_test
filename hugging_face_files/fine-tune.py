@@ -4,10 +4,8 @@ import torch.nn.functional as F
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
-from torch.nn import DataParallel
+from accelerate import Accelerator
 
-# Set the CUDA_VISIBLE_DEVICES environment variable
-os.environ["CUDA_VISIBLE_DEVICES"] = "0,1"  # Use the first two GPUs
 
 def load_dataset(train_path, test_path, tokenizer):
     train_dataset = TextDataset(
@@ -45,6 +43,7 @@ def compute_metrics(eval_pred):
 
 
 def train(model, train_dataset, test_dataset, output_dir, device):
+    # Move the model to the device
     training_args = TrainingArguments(
         output_dir=output_dir,
         overwrite_output_dir=True,
@@ -62,6 +61,12 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         tokenizer=tokenizer, mlm=False,
     )
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
+
+    # Create an instance of Accelerator
+    accelerator = Accelerator()
+
+    # Prepare your model and optimizer
+    model, optimizer = accelerator.prepare(model, optimizer)
 
     trainer = Trainer(
         model=model,
@@ -83,10 +88,11 @@ if __name__ == "__main__":
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
 
-    # If there are multiple GPUs available, wrap the model with DataParallel
-    if torch.cuda.device_count() > 1:
-        print("Let's use", torch.cuda.device_count(), "GPUs!")
-        model = DataParallel(model)
+    # Create an instance of Accelerator
+    accelerator = Accelerator()
+
+    # Prepare your model
+    model = accelerator.prepare(model)
 
     train_path = '../data/output_train.txt'
     test_path = '../data/output_val.txt'
