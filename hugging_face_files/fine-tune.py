@@ -7,12 +7,12 @@ def load_dataset(train_path, test_path, tokenizer):
     train_dataset = TextDataset(
         tokenizer=tokenizer,
         file_path=train_path,
-        block_size=128)
+        block_size=512)
 
     test_dataset = TextDataset(
         tokenizer=tokenizer,
         file_path=test_path,
-        block_size=128)
+        block_size=512)
 
     return train_dataset, test_dataset
 
