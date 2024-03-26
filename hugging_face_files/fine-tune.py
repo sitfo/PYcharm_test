@@ -5,6 +5,7 @@ from torch.utils.data import DataLoader, Dataset
 from datasets import load_dataset
 from transformers import GPT2TokenizerFast, GPT2Model, Trainer, TrainingArguments
 
+
 def load_and_tokenize_data():
     dataset = load_dataset("text", data_files={"train": "../data/output_train.txt",
                                                "validation": "../data/output_val.txt"})
@@ -18,6 +19,13 @@ def load_and_tokenize_data():
     tokenized_datasets = dataset.map(tokenize_function, batched=True, num_proc=1, remove_columns=["text"])
 
     return tokenized_datasets["train"], tokenized_datasets["validation"], tokenizer
+
+
+# Define the evaluation metric (e.g., perplexity)
+def compute_metrics(eval_prediction):
+    perplexity = eval_prediction["loss"].exp().item()
+    return {"perplexity": perplexity}
+
 
 def train(model, train_dataset, val_dataset, output_dir, device, epochs=3, batch_size=4):
     os.makedirs(output_dir, exist_ok=True)
@@ -41,12 +49,13 @@ def train(model, train_dataset, val_dataset, output_dir, device, epochs=3, batch
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=val_dataset,
-        compute_metrics=None,
+        compute_metrics=compute_metrics,
         tokenizer=tokenizer,  # Pass the tokenizer for evaluation
     )
 
     trainer.train()
     trainer.save_model(output_dir)
+
 
 if __name__ == "__main__":
     device = torch.device("cuda") if torch.cuda.is_available() else torch.device("cpu")
