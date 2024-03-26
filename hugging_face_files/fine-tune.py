@@ -43,8 +43,8 @@ def train(model, train_dataset, test_dataset, output_dir, device):
 
 if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-    model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
+    tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
+    model = GPT2LMHeadModel.from_pretrained('gpt2-large').to(device)
 
     train_path = '../data/output_train.txt'
     test_path = '../data/output_val.txt'
