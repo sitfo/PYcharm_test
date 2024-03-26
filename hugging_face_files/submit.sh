@@ -1,8 +1,9 @@
 #!/bin/bash
 #SBATCH --ntasks=16
+#SBATCH --account=leemg-jinlongphd
 #SBATCH --time=240:0
 #SBATCH --qos=bbgpu
-#SBATCH --gres=gpu:a100_80:1
+#SBATCH --gres=gpu:a100:2
 
 set -e
 
