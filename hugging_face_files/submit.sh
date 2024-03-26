@@ -2,7 +2,7 @@
 #SBATCH --ntasks=16
 #SBATCH --time=240:0
 #SBATCH --qos=bbgpu
-#SBATCH --gres=gpu:1
+#SBATCH --gres=gpu:a100:1
 
 set -e
 
