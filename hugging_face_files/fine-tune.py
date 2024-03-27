@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
-from torch.nn.parallel import DataParallel
+from torch.nn.parallel import DistributedDataParallel
 
 
 def load_dataset(train_path, test_path, tokenizer):
@@ -114,7 +114,7 @@ if __name__ == "__main__":
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
     model = GPT2LMHeadModel.from_pretrained('gpt2-large')
 
-    model = DataParallel(model)
+    model = DistributedDataParallel(model)
     model.to(device)
 
     train_path = '../data/output_train.txt'
