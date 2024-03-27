@@ -1,0 +1,4 @@
+"compute_environment": "SLURM",
+"distributed_type": "MULTI_GPU",
+"fp16": true,
+"cpu_offload": true
