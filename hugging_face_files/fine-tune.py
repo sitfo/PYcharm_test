@@ -119,8 +119,8 @@ if __name__ == "__main__":
         # Set environment variables for distributed training
         os.environ['MASTER_ADDR'] = 'localhost'
         os.environ['MASTER_PORT'] = '12355'
-        os.environ['RANK'] = "0"
-        os.environ['WORLD_SIZE'] = "1"
+        os.environ['RANK'] = os.environ['SLURM_PROCID']
+        os.environ['WORLD_SIZE'] = os.environ['SLURM_NTASKS']
         # Initialize process group
         torch.distributed.init_process_group(backend='nccl')
         model = DistributedDataParallel(model)
