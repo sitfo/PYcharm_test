@@ -15,5 +15,15 @@ module load cuDNN/8.4.1.50-CUDA-11.7.0
 
 pip install --user -r ../requirements.txt
 
+# Set the number of processes based on the number of GPUs
+export WORLD_SIZE=$(echo $SLURM_JOB_GPUS | tr ',' '\n' | wc -l)
+export RANK=$SLURM_PROCID
+
+# Get the master node's address
+export MASTER_ADDR=$(scontrol show hostname $SLURM_NODELIST | head -n1)
+
+# Set the master port (replace 12345 with your desired port number)
+export MASTER_PORT=12345
+
 srun python fine-tune.py
 python storytelling.py
