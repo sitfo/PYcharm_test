@@ -1,6 +1,7 @@
 import os
 import torch
 import torch.nn.functional as F
+import torch.distributed as dist
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
@@ -113,6 +114,9 @@ if __name__ == "__main__":
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
+
+    # Initialize the distributed environment
+    dist.init_process_group(backend='nccl')
 
     model = FSDP(model)
 
