@@ -25,5 +25,8 @@ export MASTER_ADDR=$(scontrol show hostname $SLURM_NODELIST | head -n1)
 # Set the master port (replace 12345 with your desired port number)
 export MASTER_PORT=12345
 
+# Set CUDA_VISIBLE_DEVICES
+export CUDA_VISIBLE_DEVICES=$SLURM_JOB_GPUS
+
 srun python fine-tune.py
 python storytelling.py
