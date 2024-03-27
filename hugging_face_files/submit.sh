@@ -16,5 +16,7 @@ module load cuDNN/8.4.1.50-CUDA-11.7.0
 
 pip install --user -r ../requirements.txt
 
-python fine-tune.py
+accelerate config
+
+accelerate launch fine-tune.py
 python storytelling.py

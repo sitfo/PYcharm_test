@@ -7,7 +7,7 @@ from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollat
 from transformers import Trainer, TrainingArguments
 from torch.nn.parallel import DataParallel
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
-
+import accelerate
 
 def load_dataset(train_path, test_path, tokenizer):
     """
@@ -112,17 +112,23 @@ if __name__ == "__main__":
     """
     Main function to execute the training process.
     """
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    accelerator = accelerate.Accelerator(fp16=True, cpu_offload=True)
+
+    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
 
-    model = DataParallel(model, device_ids=list(range(2)), dim=0)
-
-    model.to(device)
+    model = FSDP(model)
 
     train_path = '../data/output_train.txt'
     test_path = '../data/output_val.txt'
     train_dataset, test_dataset = load_dataset(train_path, test_path, tokenizer)
+
+    # Move your model and datasets to the device
+    device = accelerator.device
+    model.to(device)
+    train_dataset.to(device)
+    test_dataset.to(device)
 
     output_dir = "../model"
     train(model, train_dataset, test_dataset, output_dir, device)
