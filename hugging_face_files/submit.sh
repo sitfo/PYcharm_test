@@ -16,8 +16,5 @@ module load cuDNN/8.4.1.50-CUDA-11.7.0
 
 pip install --user -r ../requirements.txt
 
-# Pre-configure Accelerate
-echo "compute_environment: 'slurm'" > accelerate.yaml
-
-accelerate launch fine-tune.py
+accelerate launch --config_file config.yaml fine-tune.py
 python storytelling.py

@@ -112,13 +112,11 @@ if __name__ == "__main__":
     """
     Main function to execute the training process.
     """
-    accelerator = accelerate.Accelerator(fp16=True, cpu_offload=True)
+    accelerator = accelerate.Accelerator()
 
     # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
-
-    model = FSDP(model)
 
     train_path = '../data/output_train.txt'
     test_path = '../data/output_val.txt'
