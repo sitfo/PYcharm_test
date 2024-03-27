@@ -24,5 +24,5 @@ export RANK=$SLURM_PROCID
 # Set the CUDA_VISIBLE_DEVICES environment variable
 export CUDA_VISIBLE_DEVICES=all  # Use all available GPUs
 
-python -m torch.distributed.launch --nproc_per_node=2 fine-tune.py
+python -m torch.distributed.launch --nproc_per_node=2 --master_port 29501 fine-tune.py
 python storytelling.py
