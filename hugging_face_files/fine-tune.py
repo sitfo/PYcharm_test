@@ -116,6 +116,11 @@ if __name__ == "__main__":
 
     # If multiple GPUs are available, use DistributedDataParallel
     if torch.cuda.device_count() > 1:
+        # Set environment variables for distributed training
+        os.environ['MASTER_ADDR'] = 'localhost'
+        os.environ['MASTER_PORT'] = '12355'
+        os.environ['RANK'] = "0"
+        os.environ['WORLD_SIZE'] = "1"
         # Initialize process group
         torch.distributed.init_process_group(backend='nccl')
         model = DistributedDataParallel(model)
