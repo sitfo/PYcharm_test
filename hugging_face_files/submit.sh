@@ -22,5 +22,5 @@ export MASTER_PORT=29501
 export WORLD_SIZE=2
 export RANK=$SLURM_PROCID
 
-srun python -m torch.distributed.launch --nproc_per_node=2 fine-tune.py
+python -m torch.distributed.launch --nproc_per_node=2 fine-tune.py
 python storytelling.py
