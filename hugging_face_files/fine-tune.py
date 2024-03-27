@@ -84,7 +84,6 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         evaluation_strategy="epoch",  # Add this line to perform evaluation
         save_strategy="epoch",  # Save strategy is set to "epoch" to match the evaluation strategy
         load_best_model_at_end=True,  # Add this line to load the best model at the endΩ
-        gradient_accumulation_steps=4,
     )
 
     data_collator = DataCollatorForLanguageModeling(
