@@ -114,7 +114,14 @@ if __name__ == "__main__":
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
 
-    model = DistributedDataParallel(model)
+    # If multiple GPUs are available, use DistributedDataParallel
+    if torch.cuda.device_count() > 1:
+        # Initialize process group
+        torch.distributed.init_process_group(backend='nccl')
+        model = DistributedDataParallel(model)
+    else:
+        model = torch.nn.DataParallel(model)
+
     model.to(device)
 
     train_path = '../data/output_train.txt'
