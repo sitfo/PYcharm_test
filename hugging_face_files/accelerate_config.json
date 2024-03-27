@@ -1,0 +1,6 @@
+{
+    "compute_environment": "LOCAL_MACHINE",
+    "distributed_type": "MULTI_GPU",
+    "fp16": true,
+    "cpu_offload": true
+}
