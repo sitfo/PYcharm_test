@@ -16,5 +16,11 @@ module load cuDNN/8.4.1.50-CUDA-11.7.0
 
 pip install --user -r ../requirements.txt
 
-python fine-tune.py
+# Set the necessary environment variables for distributed training
+export MASTER_ADDR=localhost
+export MASTER_PORT=29501
+export WORLD_SIZE=2
+export RANK=$SLURM_PROCID
+
+srun python -m torch.distributed.launch --nproc_per_node=2 fine-tune.py
 python storytelling.py
