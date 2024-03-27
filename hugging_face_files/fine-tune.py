@@ -111,8 +111,8 @@ if __name__ == "__main__":
     Main function to execute the training process.
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
-    model = GPT2LMHeadModel.from_pretrained('gpt2-large')
+    tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
+    model = GPT2LMHeadModel.from_pretrained('gpt2')
 
     model = DistributedDataParallel(model)
     model.to(device)
