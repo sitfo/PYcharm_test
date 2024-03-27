@@ -4,9 +4,7 @@ import torch.nn.functional as F
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
-from torch.nn.parallel import DataParallel
-from torch.utils.data import DataLoader
-from torch.utils.data.distributed import DistributedSampler
+from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
 
 
 def load_dataset(train_path, test_path, tokenizer):
@@ -30,12 +28,6 @@ def load_dataset(train_path, test_path, tokenizer):
         tokenizer=tokenizer,
         file_path=test_path,
         block_size=512)
-
-    train_sampler = DistributedSampler(train_dataset)
-    test_sampler = DistributedSampler(test_dataset)
-
-    train_loader = DataLoader(train_dataset, sampler=train_sampler, batch_size=4)
-    test_loader = DataLoader(test_dataset, sampler=test_sampler, batch_size=2)
 
     return train_dataset, test_dataset
 
@@ -122,7 +114,7 @@ if __name__ == "__main__":
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
 
-    model = DataParallel(model)
+    model = FSDP(model)
 
     model.to(device)
 
