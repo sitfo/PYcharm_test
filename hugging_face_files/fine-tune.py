@@ -114,20 +114,15 @@ if __name__ == "__main__":
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
 
-    # If multiple GPUs are available, use DistributedDataParallel
-    if torch.cuda.device_count() > 1:
+    # Set environment variables for distributed training
+    os.environ['MASTER_ADDR'] = 'localhost'
+    os.environ['MASTER_PORT'] = '12355'
+    os.environ['RANK'] = os.environ['SLURM_PROCID']
+    os.environ['WORLD_SIZE'] = os.environ['SLURM_NTASKS']
 
-        # Set environment variables for distributed training
-        os.environ['MASTER_ADDR'] = 'localhost'
-        os.environ['MASTER_PORT'] = '12355'
-        os.environ['RANK'] = os.environ['SLURM_PROCID']
-        os.environ['WORLD_SIZE'] = os.environ['SLURM_NTASKS']
-        
-        # Initialize process group
-        torch.distributed.init_process_group(backend='nccl')
-        model = DistributedDataParallel(model)
-    else:
-        model = torch.nn.DataParallel(model)
+    # Initialize process group
+    torch.distributed.init_process_group(backend='nccl')
+    model = DistributedDataParallel(model)
 
     model.to(device)
 

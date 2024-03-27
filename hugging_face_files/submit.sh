@@ -1,4 +1,5 @@
 #!/bin/bash
+#SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --account=leemg-jinlongphd
 #SBATCH --time=240:0
@@ -28,5 +29,5 @@ export MASTER_PORT=12345
 # Set CUDA_VISIBLE_DEVICES
 export CUDA_VISIBLE_DEVICES=$SLURM_JOB_GPUS
 
-srun python fine-tune.py
+python fine-tune.py
 python storytelling.py
