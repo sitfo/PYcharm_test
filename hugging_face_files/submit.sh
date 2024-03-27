@@ -22,5 +22,8 @@ export RANK=$SLURM_PROCID
 # Get the master node's address
 export MASTER_ADDR=$(scontrol show hostname $SLURM_NODELIST | head -n1)
 
+# Set the master port (replace 12345 with your desired port number)
+export MASTER_PORT=12345
+
 python fine-tune.py
 python storytelling.py
