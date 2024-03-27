@@ -15,6 +15,5 @@ module load cuDNN/8.4.1.50-CUDA-11.7.0
 
 pip install --user -r ../requirements.txt
 
-export RANK=0  # Set the rank for the first process
 python fine-tune.py
 python storytelling.py
