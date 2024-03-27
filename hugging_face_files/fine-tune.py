@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
-from torch.nn.parallel import DistributedDataParallel
+from torch.nn.parallel import DataParallel
 
 
 def load_dataset(train_path, test_path, tokenizer):
@@ -114,15 +114,7 @@ if __name__ == "__main__":
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
 
-    # Set environment variables for distributed training
-    os.environ['MASTER_ADDR'] = 'localhost'
-    os.environ['MASTER_PORT'] = '12355'
-    os.environ['RANK'] = os.environ['SLURM_PROCID']
-    os.environ['WORLD_SIZE'] = os.environ['SLURM_NTASKS']
-
-    # Initialize process group
-    torch.distributed.init_process_group(backend='nccl')
-    model = DistributedDataParallel(model)
+    model = DataParallel(model)
 
     model.to(device)
 
