@@ -92,9 +92,6 @@ def train(model, train_dataset, test_dataset, output_dir, device):
     )
     optimizer = torch.optim.AdamW(model.parameters(), lr=1e-5)
 
-    # Wrap the model with DataParallel
-    model = DataParallel(model)
-
     trainer = Trainer(
         model=model,
         args=training_args,
@@ -116,7 +113,10 @@ if __name__ == "__main__":
     """
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-    model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
+    model = GPT2LMHeadModel.from_pretrained('gpt2')
+
+    model = DataParallel(model)
+    model.to(device)
 
     train_path = '../data/output_train.txt'
     test_path = '../data/output_val.txt'
