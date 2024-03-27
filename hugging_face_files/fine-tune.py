@@ -5,6 +5,7 @@ import torch.distributed as dist
 from torch.nn import MSELoss
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
+from torch.nn.parallel import DataParallel
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
 
 
@@ -115,10 +116,7 @@ if __name__ == "__main__":
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
 
-    # Initialize the distributed environment
-    dist.init_process_group(backend='nccl')
-
-    model = FSDP(model)
+    model = DataParallel(model, device_ids=list(range(2)), dim=0)
 
     model.to(device)
 
