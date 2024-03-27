@@ -15,5 +15,9 @@ module load cuDNN/8.4.1.50-CUDA-11.7.0
 
 pip install --user -r ../requirements.txt
 
+# Set the number of processes
+export WORLD_SIZE=2
+export RANK=$SLURM_PROCID
+
 python fine-tune.py
 python storytelling.py
