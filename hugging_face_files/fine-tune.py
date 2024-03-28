@@ -86,6 +86,12 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         output_dir (str): The directory where the model will be saved.
         device (torch.device): The device where the model will be trained.
     """
+
+    # Create a DistributedSampler for the training and testing datasets
+    train_sampler = DistributedSampler(train_dataset)
+    test_sampler = DistributedSampler(test_dataset)
+
+
     training_args = TrainingArguments(
         output_dir=output_dir,
         overwrite_output_dir=True,
@@ -114,6 +120,9 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         compute_metrics=lambda eval_pred: compute_metrics(eval_pred, trainer.state.global_step),
         # Pass the optimizer to the Trainer
         optimizers=(optimizer, None),
+        # Pass the samplers to the Trainer
+        train_sampler=train_sampler,
+        eval_sampler=test_sampler,
     )
 
     trainer.train()
@@ -151,7 +160,7 @@ if __name__ == "__main__":
     # Load the datasets
     train_dataset, test_dataset = load_dataset(train_path, test_path, tokenizer)
 
-    output_dir = "../model"
+    output_dir = "/rds/projects/l/leemg-jinlongphd/models"
     train(model, train_dataset, test_dataset, output_dir, device)
 
     # After finishing training, don't forget to destroy the process group
