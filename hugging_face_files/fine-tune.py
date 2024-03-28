@@ -130,7 +130,7 @@ if __name__ == "__main__":
     # Move model and datacollator to the GPU
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
-    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False).to(device)
+    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
     # Wrap the model with FSDP
     model = FSDP(model, device_id=local_rank)
