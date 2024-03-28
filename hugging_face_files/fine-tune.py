@@ -28,6 +28,23 @@ def load_dataset(train_path, test_path, tokenizer):
     return train_dataset, test_dataset
 
 
+def cross_entropy_loss(predictions, labels):
+    return F.cross_entropy(predictions, labels)
+
+
+def perplexity_loss(predictions, labels):
+    ce_loss = cross_entropy_loss(predictions, labels)
+    return torch.exp(ce_loss)
+
+
+def kl_divergence_loss(predictions, labels):
+    return F.kl_div(predictions, labels)
+
+
+def mse_loss(predictions, labels):
+    return MSELoss()(predictions, labels)
+
+
 def compute_metrics(eval_pred, global_step):
     """
     Compute the metrics for evaluation.
@@ -42,24 +59,20 @@ def compute_metrics(eval_pred, global_step):
     predictions = predictions[0]  # get the logits
     labels = labels[0]  # get the true labels
 
-    # Cross-Entropy Loss
-    ce_loss = F.cross_entropy(predictions, labels)
+    # Compute each loss
+    ce_loss = cross_entropy_loss(predictions, labels)
     writer.add_scalar('Loss/cross_entropy', ce_loss, global_step)
 
-    # Perplexity
-    perplexity = torch.exp(ce_loss)
-    writer.add_scalar('Loss/perplexity', perplexity, global_step)
+    # perplexity = perplexity_loss(predictions, labels)
+    # writer.add_scalar('Loss/perplexity', perplexity, global_step)
+    #
+    # kl_div_loss = kl_divergence_loss(predictions, labels)
+    # writer.add_scalar('Loss/kl_divergence', kl_div_loss, global_step)
+    #
+    # mse = mse_loss(predictions, labels)
+    # writer.add_scalar('Loss/mse', mse, global_step)
 
-    # KL Divergence
-    kl_div_loss = F.kl_div(predictions, labels)
-    writer.add_scalar('Loss/kl_divergence', kl_div_loss, global_step)
-
-    # Mean Squared Error
-    mse_loss = MSELoss()(predictions, labels)
-    writer.add_scalar('Loss/mse', mse_loss, global_step)
-
-    return {"cross_entropy": ce_loss.item(), "perplexity": perplexity.item(), "kl_divergence": kl_div_loss.item(),
-            "mse": mse_loss.item()}
+    return {"cross_entropy": ce_loss.item()}
 
 
 def train(model, train_dataset, test_dataset, output_dir, device):
