@@ -27,5 +27,5 @@ while IFS= read -r package; do
     fi
 done < "$REQUIREMENTS_FILE"
 
-torchrun --standalone --nnodes 1 --nproc_per_node 2 fine-tune.py
+torchrun --standalone --nnodes 1 --nproc_per_node 2 FSDP_train.py
 python storytelling.py
