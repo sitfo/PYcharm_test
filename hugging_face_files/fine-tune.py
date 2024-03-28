@@ -142,7 +142,8 @@ if __name__ == "__main__":
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
     # Wrap the model with FullyShardedDataParallel
-    model = FSDP(model, device_ids=[local_rank], output_device=local_rank)
+    model = FSDP(model)
+    model = model.to(device)
 
     # Set up the remaining variables
     train_path = '../data/output_train.txt'
