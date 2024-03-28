@@ -15,7 +15,7 @@ from torch.utils.data.distributed import DistributedSampler
 writer = SummaryWriter()
 
 
-def distributed_load_dataset(train_path, test_path, tokenizer):
+def load_dataset(train_path, test_path, tokenizer):
     train_dataset = TextDataset(
         tokenizer=tokenizer,
         file_path=train_path,
@@ -25,10 +25,6 @@ def distributed_load_dataset(train_path, test_path, tokenizer):
         tokenizer=tokenizer,
         file_path=test_path,
         block_size=512)
-
-    sampler = DistributedSampler(train_dataset, num_replicas=world_size, rank=local_rank)
-    train_dataset = torch.utils.data.DataLoader(train_dataset, batch_size=4, sampler=sampler)
-
     return train_dataset, test_dataset
 
 
@@ -140,7 +136,7 @@ if __name__ == "__main__":
     test_path = '../data/output_val.txt'
 
     # Load the datasets
-    train_dataset, test_dataset = distributed_load_dataset(train_path, test_path, tokenizer)
+    train_dataset, test_dataset = load_dataset(train_path, test_path, tokenizer)
 
     output_dir = "../model"
     train(model, train_dataset, test_dataset, output_dir, device)
