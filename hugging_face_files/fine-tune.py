@@ -6,7 +6,7 @@ from torch.nn import MSELoss
 from torch.utils.tensorboard import SummaryWriter
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
-from torch.nn.parallel import DataParallel
+from torch.nn.parallel import DistributedDataParallel
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
 from torch.distributed import init_process_group, destroy_process_group
 from torch.utils.data.distributed import DistributedSampler
@@ -140,8 +140,8 @@ if __name__ == "__main__":
     model = GPT2LMHeadModel.from_pretrained('gpt2')
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
-    # Wrap the model with FSDP
-    model = FSDP(model, device_id=local_rank)
+    # Wrap the model with DistributedDataParallel
+    model = DistributedDataParallel(model, device_ids=[local_rank], output_device=local_rank)
 
     # Set up the remaining variables
     train_path = '../data/output_train.txt'
