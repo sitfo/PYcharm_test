@@ -98,7 +98,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         num_train_epochs=3,
         per_device_train_batch_size=4,
         per_device_eval_batch_size=2,
-        tf32=True,
+        fp16=True,
         save_steps=10_000,
         save_total_limit=2,
         evaluation_strategy="epoch",  # Add this line to perform evaluation
@@ -133,8 +133,6 @@ if __name__ == "__main__":
     """
     Main function to execute the training process.
     """
-    torch.backends.cuda.matmul.allow_tf32 = True
-    torch.backends.cudnn.allow_tf32 = True
 
     # Initialize the distributed environment using Slurm arguments
     local_rank = int(os.environ["LOCAL_RANK"])
