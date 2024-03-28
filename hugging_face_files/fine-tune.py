@@ -138,10 +138,11 @@ if __name__ == "__main__":
     # Move model and datacollator to the GPU
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
+    model.gradient_checkpointing_enable()
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
-    # Wrap the model with DistributedDataParallel
-    model = DistributedDataParallel(model, device_ids=[local_rank], output_device=local_rank)
+    # Wrap the model with FullyShardedDataParallel
+    model = FSDP(model, device_ids=[local_rank], output_device=local_rank)
 
     # Set up the remaining variables
     train_path = '../data/output_train.txt'
