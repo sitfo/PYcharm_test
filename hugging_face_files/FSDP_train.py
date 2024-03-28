@@ -130,8 +130,8 @@ if __name__ == "__main__":
     model = model.to(device)
 
     # Set up the remaining variables
-    train_path = '../data/output_train.txt'
-    test_path = '../data/output_val.txt'
+    train_path = '/rds/projects/l/leemg-jinlongphd/data/output_train.txt'
+    test_path = '/rds/projects/l/leemg-jinlongphd/data/output_val.txt'
 
     # Load the datasets
     train_dataset, test_dataset = load_dataset(train_path, test_path, tokenizer)
