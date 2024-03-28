@@ -121,8 +121,8 @@ if __name__ == "__main__":
         device = torch.device("cuda", local_rank)
 
     # Move model and datacollator to the GPU
-    tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-    model = GPT2LMHeadModel.from_pretrained('gpt2')
+    tokenizer = GPT2Tokenizer.from_pretrained('gpt2-large')
+    model = GPT2LMHeadModel.from_pretrained('gpt2-large')
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
     # Wrap the model with FullyShardedDataParallel

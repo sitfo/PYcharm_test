@@ -29,6 +29,6 @@ if __name__ == "__main__":
     model_path = "/rds/projects/l/leemg-jinlongphd/models"  # replace with the path to your fine-tuned model
     model, tokenizer = load_model(model_path)
 
-    prompt = "Once upon a time"  # replace with your story prompt
+    prompt = "write a story about a man and a dog"  # replace with your story prompt
     story = generate_story(model, tokenizer, prompt)
     print(story)
