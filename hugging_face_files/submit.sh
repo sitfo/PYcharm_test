@@ -1,5 +1,6 @@
 #!/bin/bash
 #SBATCH --nodes=1
+#SBATCH --ntasks=36
 #SBATCH --mem=256G
 #SBATCH --time=240:0
 #SBATCH --qos=bbgpu
