@@ -87,11 +87,6 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         device (torch.device): The device where the model will be trained.
     """
 
-    # Create a DistributedSampler for the training and testing datasets
-    train_sampler = DistributedSampler(train_dataset)
-    test_sampler = DistributedSampler(test_dataset)
-
-
     training_args = TrainingArguments(
         output_dir=output_dir,
         overwrite_output_dir=True,
@@ -120,9 +115,6 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         compute_metrics=lambda eval_pred: compute_metrics(eval_pred, trainer.state.global_step),
         # Pass the optimizer to the Trainer
         optimizers=(optimizer, None),
-        # Pass the samplers to the Trainer
-        train_sampler=train_sampler,
-        eval_sampler=test_sampler,
     )
 
     trainer.train()
