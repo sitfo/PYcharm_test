@@ -1,6 +1,6 @@
 import os
 import re
-import nltk
+import json
 from tqdm import tqdm
 from langdetect import detect
 
@@ -47,15 +47,18 @@ def main():
     folder_path = "../source_data"
     output_file_train = "../data/output_train.txt"
     output_file_val = "../data/output_val.txt"
-    vocab_file = "../data/vocab.txt"
+    output_file_train_json = "../data/output_train.json"
+    output_file_val_json = "../data/output_val.json"
+    # vocab_file = "../data/vocab.txt"
 
     files = txt_files_in_dir(folder_path)
     total_files = len(files)
 
     # Calculate the split indices
-    split_index = int(total_files * 0.9)  # 90% for training
-    files_train = files[:split_index]
-    files_val = files[split_index:]
+    split_index_train = int(total_files * 0.9)  # 90% for training, 10% for validation
+
+    files_train = files[:split_index_train]
+    files_val = files[split_index_train:]
 
     # Process the files for training and validation separately
     vocab = set()
@@ -79,6 +82,27 @@ def main():
                 vocab.update(characters)
 
     # Write the vocabulary to a file, save all words and characters
-    with open(vocab_file, "w", encoding="utf-8") as vfile:
-        for char in vocab:
-            vfile.write(char + '\n')
+    # with open(vocab_file, "w", encoding="utf-8") as vfile:
+    #     for char in vocab:
+    #         vfile.write(char + '\n')
+
+    # Build json files
+    with open(output_file_train_json, "w", encoding="utf-8") as outfile:
+        for filename in tqdm(files_train, total=len(files_train)):
+            file_path = os.path.join(folder_path, filename)
+            text = extract_main_body(file_path)
+            if text:
+                data = {"filename": filename, "text": text}
+                outfile.write(json.dumps(data) + "\n")
+                characters = set(text)
+                vocab.update(characters)
+
+    with open(output_file_val_json, "w", encoding="utf-8") as outfile:
+        for filename in tqdm(files_val, total=len(files_val)):
+            file_path = os.path.join(folder_path, filename)
+            text = extract_main_body(file_path)
+            if text:
+                data = {"filename": filename, "text": text}
+                outfile.write(json.dumps(data) + "\n")
+                characters = set(text)
+                vocab.update(characters)
