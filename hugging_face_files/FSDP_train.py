@@ -25,7 +25,7 @@ def load_dataset(train_path, test_path, tokenizer):
     return train_dataset, test_dataset
 
 
-def train(model, train_dataset, test_dataset, output_dir, device):
+def train(model, train_dataset, test_dataset, output_dir, device, data_collator):
     """
     Train the model.
 
@@ -42,8 +42,14 @@ def train(model, train_dataset, test_dataset, output_dir, device):
     learning_rate = 1e-5
 
     # Create data loaders
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size)
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size)
+    train_sampler = DistributedSampler(train_dataset)
+    test_sampler = DistributedSampler(test_dataset)
+
+    # Create data loaders
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size,
+                                               collate_fn=data_collator)
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=batch_size,
+                                              collate_fn=data_collator)
 
     # Initialize the optimizer
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
@@ -57,11 +63,13 @@ def train(model, train_dataset, test_dataset, output_dir, device):
     # Train the model
     for epoch in range(3):  # Number of epochs
         progress_bar = tqdm(train_loader, desc=f"Epoch {epoch + 1}", unit="batch")
-        for batch in train_loader:
+        for batch in progress_bar:
             optimizer.zero_grad()
 
             # Forward pass
-            outputs = model.module(batch["input_ids"].to(device), labels=batch["labels"].to(device))
+            inputs = batch["input_ids"].to(device)
+            labels = batch["input_ids"].roll(-1).to(device)
+            outputs = model(inputs, labels=labels)
             loss = outputs.loss
 
             # Backward pass and optimization
@@ -72,13 +80,17 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         # Validation
         model.eval()
         total_loss = 0
-        # Add a progress bar for the validation loop
         progress_bar = tqdm(test_loader, desc="Validation", unit="batch")
         with torch.no_grad():
-            for batch in test_loader:
-                outputs = model.module(batch["input_ids"].to(device), labels=batch["labels"].to(device))
+            for batch in progress_bar:
+                inputs = batch["input_ids"].to(device)
+                labels = batch["input_ids"].roll(-1).to(device)
+                outputs = model(inputs, labels=labels)
                 loss = outputs.loss
                 total_loss += loss.item()
+
+                # Update the progress bar
+                progress_bar.set_postfix({'validation_loss': loss.item()})
 
         avg_loss = total_loss / len(test_loader)
         print(f"Validation loss: {avg_loss}")
@@ -111,7 +123,6 @@ if __name__ == "__main__":
     # Move model and datacollator to the GPU
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
     model = GPT2LMHeadModel.from_pretrained('gpt2')
-    model.gradient_checkpointing_enable()
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
     # Wrap the model with FullyShardedDataParallel
@@ -126,7 +137,7 @@ if __name__ == "__main__":
     train_dataset, test_dataset = load_dataset(train_path, test_path, tokenizer)
 
     output_dir = "/rds/projects/l/leemg-jinlongphd/models"
-    train(model, train_dataset, test_dataset, output_dir, device)
+    train(model, train_dataset, test_dataset, output_dir, device, data_collator)
 
     # After finishing training, don't forget to destroy the process group
     destroy_process_group()
