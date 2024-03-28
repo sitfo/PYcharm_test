@@ -11,7 +11,7 @@ from torch.utils.data.distributed import DistributedSampler
 writer = SummaryWriter()
 
 
-def load_dataset(train_path, test_path, tokenizer):
+def Loading_dataset(train_path, test_path, tokenizer):
     train_dataset = TextDataset(
         tokenizer=tokenizer,
         file_path=train_path,
@@ -134,7 +134,7 @@ if __name__ == "__main__":
     test_path = '/rds/projects/l/leemg-jinlongphd/data/output_val.txt'
 
     # Load the datasets
-    train_dataset, test_dataset = load_dataset(train_path, test_path, tokenizer)
+    train_dataset, test_dataset = Loading_dataset(train_path, test_path, tokenizer)
 
     output_dir = "/rds/projects/l/leemg-jinlongphd/models"
     train(model, train_dataset, test_dataset, output_dir, device, data_collator)
