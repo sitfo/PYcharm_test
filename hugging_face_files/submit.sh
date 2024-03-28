@@ -1,7 +1,6 @@
 #!/bin/bash
 #SBATCH --nodes=1
 #SBATCH --ntasks=64
-#SBATCH --account=leemg-jinlongphd
 #SBATCH --time=240:0
 #SBATCH --qos=bbgpu
 #SBATCH --gres=gpu:a100:2
@@ -27,5 +26,5 @@ while IFS= read -r package; do
     fi
 done < "$REQUIREMENTS_FILE"
 
-torchrun --nnodes 1 --nproc_per_node 2 fine-tune.py
+torchrun --standalone --nnodes 1 --nproc_per_node 2 fine-tune.py
 python storytelling.py
