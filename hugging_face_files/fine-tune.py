@@ -3,24 +3,19 @@ import torch
 import torch.nn.functional as F
 import torch.distributed as dist
 from torch.nn import MSELoss
+from torch.utils.tensorboard import SummaryWriter
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from transformers import Trainer, TrainingArguments
 from torch.nn.parallel import DataParallel
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
-import accelerate
+from torch.distributed import init_process_group, destroy_process_group
+from torch.utils.data.distributed import DistributedSampler
 
-def load_dataset(train_path, test_path, tokenizer):
-    """
-    Load the training and testing datasets.
+# Create a SummaryWriter instance
+writer = SummaryWriter()
 
-    Args:
-        train_path (str): The path to the training dataset.
-        test_path (str): The path to the testing dataset.
-        tokenizer (GPT2Tokenizer): The tokenizer to be used.
 
-    Returns:
-        Tuple[TextDataset, TextDataset]: The training and testing datasets.
-    """
+def distributed_load_dataset(train_path, test_path, tokenizer):
     train_dataset = TextDataset(
         tokenizer=tokenizer,
         file_path=train_path,
@@ -31,10 +26,13 @@ def load_dataset(train_path, test_path, tokenizer):
         file_path=test_path,
         block_size=512)
 
+    sampler = DistributedSampler(train_dataset, num_replicas=world_size, rank=local_rank)
+    train_dataset = torch.utils.data.DataLoader(train_dataset, batch_size=4, sampler=sampler)
+
     return train_dataset, test_dataset
 
 
-def compute_metrics(eval_pred):
+def compute_metrics(eval_pred, global_step):
     """
     Compute the metrics for evaluation.
 
@@ -50,15 +48,19 @@ def compute_metrics(eval_pred):
 
     # Cross-Entropy Loss
     ce_loss = F.cross_entropy(predictions, labels)
+    writer.add_scalar('Loss/cross_entropy', ce_loss, global_step)
 
     # Perplexity
     perplexity = torch.exp(ce_loss)
+    writer.add_scalar('Loss/perplexity', perplexity, global_step)
 
     # KL Divergence
     kl_div_loss = F.kl_div(predictions, labels)
+    writer.add_scalar('Loss/kl_divergence', kl_div_loss, global_step)
 
     # Mean Squared Error
     mse_loss = MSELoss()(predictions, labels)
+    writer.add_scalar('Loss/mse', mse_loss, global_step)
 
     return {"cross_entropy": ce_loss.item(), "perplexity": perplexity.item(), "kl_divergence": kl_div_loss.item(),
             "mse": mse_loss.item()}
@@ -81,6 +83,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         num_train_epochs=3,
         per_device_train_batch_size=4,
         per_device_eval_batch_size=2,
+        tf32=True,
         save_steps=10_000,
         save_total_limit=2,
         evaluation_strategy="epoch",  # Add this line to perform evaluation
@@ -99,7 +102,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         data_collator=data_collator,
         train_dataset=train_dataset,
         eval_dataset=test_dataset,
-        compute_metrics=compute_metrics,
+        compute_metrics=lambda eval_pred: compute_metrics(eval_pred, trainer.state.global_step),
         # Pass the optimizer to the Trainer
         optimizers=(optimizer, None),
     )
@@ -112,21 +115,35 @@ if __name__ == "__main__":
     """
     Main function to execute the training process.
     """
-    accelerator = accelerate.Accelerator()
+    torch.backends.cuda.matmul.allow_tf32 = True
+    torch.backends.cudnn.allow_tf32 = True
 
-    # device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # Initialize the distributed environment using Slurm arguments
+    local_rank = int(os.environ["LOCAL_RANK"])
+    world_size = int(os.environ["WORLD_SIZE"])
+    torch.distributed.init_process_group("nccl", rank=local_rank, world_size=world_size)
+
+    # Pin GPU to local_rank
+    torch.cuda.set_device(local_rank)
+    device = torch.device("cuda", local_rank)
+
+    # Move model and datacollator to the GPU
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
-    model = GPT2LMHeadModel.from_pretrained('gpt2')
+    model = GPT2LMHeadModel.from_pretrained('gpt2').to(device)
+    data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False).to(device)
 
+    # Wrap the model with FSDP
+    model = FSDP(model, device_id=local_rank)
+
+    # Set up the remaining variables
     train_path = '../data/output_train.txt'
     test_path = '../data/output_val.txt'
-    train_dataset, test_dataset = load_dataset(train_path, test_path, tokenizer)
 
-    # Move your model and datasets to the device
-    device = accelerator.device
-    model.to(device)
-    train_dataset.to(device)
-    test_dataset.to(device)
+    # Load the datasets
+    train_dataset, test_dataset = distributed_load_dataset(train_path, test_path, tokenizer)
 
     output_dir = "../model"
     train(model, train_dataset, test_dataset, output_dir, device)
+
+    # After finishing training, don't forget to destroy the process group
+    destroy_process_group()
