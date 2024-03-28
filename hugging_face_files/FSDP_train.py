@@ -1,5 +1,6 @@
 import os
 import torch
+from tqdm import tqdm
 from torch.utils.tensorboard import SummaryWriter
 from transformers import GPT2LMHeadModel, GPT2Tokenizer, TextDataset, DataCollatorForLanguageModeling
 from torch.distributed.fsdp import FullyShardedDataParallel as FSDP
@@ -55,6 +56,7 @@ def train(model, train_dataset, test_dataset, output_dir, device):
 
     # Train the model
     for epoch in range(3):  # Number of epochs
+        progress_bar = tqdm(train_loader, desc=f"Epoch {epoch + 1}", unit="batch")
         for batch in train_loader:
             optimizer.zero_grad()
 
@@ -70,6 +72,8 @@ def train(model, train_dataset, test_dataset, output_dir, device):
         # Validation
         model.eval()
         total_loss = 0
+        # Add a progress bar for the validation loop
+        progress_bar = tqdm(test_loader, desc="Validation", unit="batch")
         with torch.no_grad():
             for batch in test_loader:
                 outputs = model.module(batch["input_ids"].to(device), labels=batch["labels"].to(device))
