@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --nodes=1
-#SBATCH --ntasks=16
+#SBATCH --ntasks=64
 #SBATCH --account=leemg-jinlongphd
 #SBATCH --time=240:0
 #SBATCH --qos=bbgpu
