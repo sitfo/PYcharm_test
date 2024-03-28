@@ -123,9 +123,9 @@ if __name__ == "__main__":
     world_size = int(os.environ["WORLD_SIZE"])
     torch.distributed.init_process_group("nccl", rank=local_rank, world_size=world_size)
 
-    # Pin GPU to local_rank
-    torch.cuda.set_device(local_rank)
-    device = torch.device("cuda", local_rank)
+    if torch.cuda.is_available():
+        torch.cuda.set_device(local_rank)
+        device = torch.device("cuda", local_rank)
 
     # Move model and datacollator to the GPU
     tokenizer = GPT2Tokenizer.from_pretrained('gpt2')
