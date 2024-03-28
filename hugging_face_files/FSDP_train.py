@@ -126,8 +126,8 @@ if __name__ == "__main__":
     data_collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
 
     # Wrap the model with FullyShardedDataParallel
-    model = FSDP(model)
     model = model.to(device)
+    model = FSDP(model)
 
     # Set up the remaining variables
     train_path = '/rds/projects/l/leemg-jinlongphd/data/output_train.txt'
